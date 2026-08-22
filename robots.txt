@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-
 Sitemap: https://phantom-site-gray.vercel.app/sitemap.xml
