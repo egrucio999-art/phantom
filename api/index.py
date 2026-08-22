@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
-import requests
+import json
+import urllib.request
+import urllib.error
 
 app = Flask(__name__)
 
@@ -11,23 +13,27 @@ def submit_review():
     try:
         data = request.get_json()
         
-        headers = {
-            "apikey": SUPABASE_KEY,
-            "Authorization": f"Bearer {SUPABASE_KEY}",
-            "Content-Type": "application/json",
-            "Prefer": "return=minimal"
-        }
+        payload = json.dumps({
+            "name": data.get('name',''),
+            "service": data.get('service',''),
+            "rating": data.get('rating',5),
+            "text": data.get('text','')
+        }).encode('utf-8')
         
-        response = requests.post(
+        req = urllib.request.Request(
             f"{SUPABASE_URL}/rest/v1/reviews",
-            json={
-                "name": data.get('name',''),
-                "service": data.get('service',''),
-                "rating": data.get('rating',5),
-                "text": data.get('text','')
+            data=payload,
+            headers={
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}",
+                "Content-Type": "application/json",
+                "Prefer": "return=minimal"
             },
-            headers=headers
+            method='POST'
         )
+        
+        with urllib.request.urlopen(req) as response:
+            result = response.read()
         
         return jsonify({'status': 'ok'}), 200
     except Exception as e:
@@ -36,17 +42,18 @@ def submit_review():
 @app.route('/api/reviews', methods=['GET'])
 def get_reviews():
     try:
-        headers = {
-            "apikey": SUPABASE_KEY,
-            "Authorization": f"Bearer {SUPABASE_KEY}"
-        }
-        
-        response = requests.get(
+        req = urllib.request.Request(
             f"{SUPABASE_URL}/rest/v1/reviews?select=*&order=id.desc&limit=100",
-            headers=headers
+            headers={
+                "apikey": SUPABASE_KEY,
+                "Authorization": f"Bearer {SUPABASE_KEY}"
+            }
         )
         
-        return response.json(), 200
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read())
+        
+        return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
