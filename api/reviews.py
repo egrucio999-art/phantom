@@ -3,8 +3,8 @@ import os
 from http.server import BaseHTTPRequestHandler
 import requests
 
-SUPABASE_URL = "https://ТВОЙ_ПРОЕКТ.supabase.co"
-SUPABASE_KEY = "ТВОЙ_КЛЮЧ"
+SUPABASE_URL = "https://hkwikcffswxoizyevqsh.supabase.co"
+SUPABASE_KEY = "sb_publishable_ChkoCcwWUfiif523Osw2-Q_klJYxRJr"
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -15,12 +15,18 @@ class handler(BaseHTTPRequestHandler):
         headers = {
             "apikey": SUPABASE_KEY,
             "Authorization": f"Bearer {SUPABASE_KEY}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
         }
         
         response = requests.post(
             f"{SUPABASE_URL}/rest/v1/reviews",
-            json=data,
+            json={
+                "name": data.get('name',''),
+                "service": data.get('service',''),
+                "rating": data.get('rating',5),
+                "text": data.get('text','')
+            },
             headers=headers
         )
         
@@ -37,7 +43,7 @@ class handler(BaseHTTPRequestHandler):
         }
         
         response = requests.get(
-            f"{SUPABASE_URL}/rest/v1/reviews?select=*&order=created_at.desc&limit=100",
+            f"{SUPABASE_URL}/rest/v1/reviews?select=*&order=id.desc&limit=100",
             headers=headers
         )
         
@@ -46,3 +52,10 @@ class handler(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
         self.wfile.write(response.content)
+    
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
