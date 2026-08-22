@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    {"source": "/api/reviews", "destination": "/api/reviews.py"}
+  "routes": [
+    {"src": "/api/(.*)", "dest": "/api/index.py"},
+    {"src": "/(.*)", "dest": "/index.html"}
   ]
 }
