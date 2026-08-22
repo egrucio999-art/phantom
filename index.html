@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHANTOM COMPANY — Агрегатор цифровой безопасности</title>
+<meta name="description" content="PHANTOM COMPANY — полный спектр услуг по цифровой безопасности. Восстановление доступа, аудит, пробив, конфиденциальные задачи.">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#0a0a0a;
+--surface:#141414;
+--border:#2a2a2a;
+--text:#f5f5f5;
+--dim:#888;
+--red:#ff1a1a;
+--neon:#ff3333;
+--darkred:#660000;
+--glow:0 0 20px rgba(255,26,26,0.5);
+--glow-strong:0 0 50px rgba(255,26,26,0.8);
+--font-display:'Cinzel',serif;
+--font-tech:'Orbitron',monospace;
+--font-body:'Manrope',sans-serif;
+--font-mystic:'Cormorant Garamond',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--red);color:#fff}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--darkred);border-radius:5px}
+::-webkit-scrollbar-thumb:hover{background:var(--red)}
+
+/* ЧАСТИЦЫ */
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.particle{position:absolute;width:2px;height:2px;background:var(--red);border-radius:50%;animation:floatUp 15s infinite linear;opacity:0}
+@keyframes floatUp{0%{transform:translateY(100vh);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh);opacity:0}}
+
+.container{max-width:1300px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+
+/* ШАПКА */
+.header{position:fixed;top:0;left:0;right:0;background:rgba(10,10,10,0.97);border-bottom:2px solid var(--darkred);z-index:1000;padding:16px 0;backdrop-filter:blur(15px)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text)}
+.logo__ghost{width:50px;height:50px;position:relative;flex-shrink:0}
+.logo__ghost svg{width:100%;height:100%;filter:drop-shadow(0 0 15px rgba(255,26,26,0.7))}
+.logo__title{font-family:var(--font-display);font-size:24px;font-weight:900;letter-spacing:3px;color:var(--red);text-shadow:var(--glow);line-height:1}
+.logo__sub{font-size:9px;letter-spacing:5px;color:var(--dim);text-transform:uppercase;margin-top:4px}
+.nav{display:flex;gap:20px}
+.nav a{color:var(--dim);text-decoration:none;font-size:13px;font-weight:600;transition:all 0.3s;position:relative;padding:4px 0}
+.nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--red);transition:width 0.3s}
+.nav a:hover{color:var(--red)}
+.nav a:hover::after{width:100%}
+.header__btn{padding:12px 26px;background:var(--red);color:#fff;text-decoration:none;border-radius:4px;font-size:13px;font-weight:700;transition:all 0.3s;letter-spacing:1px;box-shadow:var(--glow)}
+.header__btn:hover{background:var(--neon);box-shadow:var(--glow-strong);transform:translateY(-2px)}
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,0.97);border-top:2px solid var(--darkred);z-index:999;padding:12px 0;backdrop-filter:blur(10px)}
+.mobile-nav a{flex:1;text-align:center;color:var(--dim);text-decoration:none;font-size:10px;font-weight:600}
+@media(max-width:768px){.mobile-nav{display:flex}.nav{display:none}}
+
+/* ГЕРОЙ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;background:radial-gradient(circle at 70% 40%,rgba(255,26,26,0.07) 0%,transparent 50%),linear-gradient(180deg,#0a0a0a,#111)}
+.hero__inner{display:flex;align-items:center;gap:60px;flex-wrap:wrap}
+.hero__content{flex:1;min-width:320px}
+.eyebrow{font-family:var(--font-tech);color:var(--red);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;margin-bottom:20px;text-shadow:var(--glow)}
+.hero__title{font-family:var(--font-display);font-size:60px;font-weight:900;margin-bottom:24px;line-height:1.1;letter-spacing:2px}
+.hero__title span{color:var(--red);text-shadow:var(--glow-strong);animation:neonPulse 2s ease-in-out infinite}
+@keyframes neonPulse{0%,100%{text-shadow:var(--glow)}50%{text-shadow:var(--glow-strong)}}
+.hero__text{color:var(--dim);font-size:17px;margin-bottom:32px;max-width:550px}
+.hero__stats{display:flex;gap:30px;margin-bottom:36px;flex-wrap:wrap}
+.hero__stat{text-align:center}
+.hero__stat strong{display:block;font-family:var(--font-display);font-size:32px;color:var(--red);text-shadow:var(--glow)}
+.hero__stat span{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
+.hero__actions{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-block;padding:16px 36px;border-radius:4px;text-decoration:none;font-size:15px;font-weight:700;transition:all 0.3s;letter-spacing:1px;cursor:pointer}
+.btn--primary{background:var(--red);color:#fff}
+.btn--primary:hover{background:var(--neon);box-shadow:var(--glow-strong);transform:translateY(-3px)}
+.btn--ghost{border:1px solid var(--darkred);color:var(--text)}
+.btn--ghost:hover{border-color:var(--red);color:var(--red);box-shadow:var(--glow);transform:translateY(-3px)}
+
+/* ПРИЗРАК С ПАЛЬЦЕМ ТСС */
+.hero__visual{flex:1;min-width:320px;display:flex;justify-content:center;position:relative}
+.phantom-card{background:linear-gradient(145deg,#161616,#0a0a0a);border:2px solid var(--darkred);border-radius:20px;padding:50px 40px;text-align:center;box-shadow:var(--glow-strong);max-width:400px;width:100%;position:relative;overflow:hidden}
+.phantom-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);animation:scanLine 3s linear infinite}
+@keyframes scanLine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.phantom-ghost{width:160px;height:160px;margin:0 auto 20px;filter:drop-shadow(0 0 40px rgba(255,26,26,0.8));animation:ghostFloat 4s ease-in-out infinite}
+.phantom-ghost svg{width:100%;height:100%}
+@keyframes ghostFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.phantom-name{font-family:var(--font-display);font-size:36px;font-weight:900;color:var(--red);letter-spacing:6px;text-shadow:var(--glow-strong);margin-bottom:10px}
+.phantom-role{font-family:var(--font-tech);color:var(--dim);font-size:12px;letter-spacing:4px;text-transform:uppercase}
+.phantom-divider{width:60px;height:2px;background:var(--red);margin:16px auto;box-shadow:var(--glow)}
+.phantom-desc{color:var(--dim);font-size:13px;margin-bottom:20px;font-family:var(--font-mystic);font-style:italic;font-size:15px}
+.phantom-badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.phantom-badge{background:var(--bg);border:1px solid var(--darkred);border-radius:8px;padding:10px 16px}
+.phantom-badge strong{display:block;font-family:var(--font-display);color:var(--red);font-size:20px}
+.phantom-badge span{color:var(--dim);font-size:9px;text-transform:uppercase;letter-spacing:1px}
+
+/* СЕКЦИИ */
+.section{padding:90px 0;position:relative}
+.section__title{font-family:var(--font-display);font-size:40px;font-weight:900;text-align:center;margin-bottom:20px;letter-spacing:3px;text-transform:uppercase}
+.section__title span{color:var(--red);text-shadow:var(--glow)}
+.section__subtitle{text-align:center;color:var(--dim);font-size:15px;max-width:600px;margin:0 auto 50px}
+
+/* УСЛУГИ */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px}
+.service-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;transition:all 0.4s;cursor:pointer;position:relative;overflow:hidden}
+.service-card:hover{border-color:var(--red);box-shadow:var(--glow);transform:translateY(-8px)}
+.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--darkred));opacity:0;transition:opacity 0.4s}
+.service-card:hover::before{opacity:1}
+.service-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.service-icon{font-size:48px;filter:drop-shadow(0 0 15px rgba(255,26,26,0.5))}
+.service-header h3{font-size:20px;font-weight:700;color:var(--text)}
+.service-desc{color:var(--dim);font-size:14px;margin-bottom:16px;line-height:1.6}
+.service-details{list-style:none;margin-bottom:16px}
+.service-details li{padding-left:20px;position:relative;color:var(--dim);font-size:13px;margin-bottom:8px}
+.service-details li::before{content:'◆';position:absolute;left:0;color:var(--red);font-size:10px;top:3px}
+.service-tags{display:flex;gap:8px;flex-wrap:wrap}
+.service-tag{display:inline-block;padding:4px 12px;background:rgba(255,26,26,0.1);border:1px solid rgba(255,26,26,0.3);border-radius:20px;font-size:10px;color:var(--red);letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s}
+.service-tag:hover{background:var(--red);color:#fff}
+.service-price{position:absolute;top:20px;right:20px;font-family:var(--font-display);font-size:14px;color:var(--red);text-shadow:var(--glow)}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<header class="header">
+<div class="container header__inner">
+<a href="#" class="logo">
+<div class="logo__ghost">
+<svg viewBox="0 0 100 100">
+<!-- ПРИЗРАК С ПАЛЬЦЕМ ТСС -->
+<path d="M50 10 C30 10 20 25 20 45 L20 90 L30 80 L40 95 L50 85 L60 95 L70 80 L80 90 L80 45 C80 25 70 10 50 10 Z" fill="#ff1a1a" opacity="0.9" stroke="#660000" stroke-width="1"/><ellipse cx="40" cy="45" rx="8" ry="6" fill="#0a0a0a"/><ellipse cx="60" cy="45" rx="8" ry="6" fill="#0a0a0a"/><circle cx="42" cy="43" r="3" fill="#ff4444"/><circle cx="62" cy="43" r="3" fill="#ff4444"/><path d="M50 60 L50 48" stroke="#0a0a0a" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M50 48 L58 42" stroke="#0a0a0a" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M58 42 L58 38" stroke="#0a0a0a" stroke-width="4" stroke-linecap="round" fill="none"/><path d="M45 58 Q50 60 55 58" stroke="#0a0a0a" stroke-width="2" fill="none"/>
+<!-- ГЛАЗА ЗАГАДОЧНЫЕ -->
+<ellipse cx="40" cy="40" rx="6" ry="5" fill="#0a0a0a"/>
+<ellipse cx="60" cy="40" rx="6" ry="5" fill="#0a0a0a"/>
+<!-- ТАИНСТВЕННЫЙ ВЗГЛЯД -->
+<circle cx="42" cy="38" r="2" fill="#ff6666"/>
+<circle cx="62" cy="38" r="2" fill="#ff6666"/>
+<!-- ПАЛЕЦ ТСС -->
+<path d="M50 55 L50 42" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M50 42 L58 38" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M58 38 L58 36" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M50 55 L42 58" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M42 58 L40 61" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div>
+<div>
+<div class="logo__title">PHANTOM</div>
+<div class="logo__sub">COMPANY</div>
+</div>
+</a>
+<nav class="nav">
+<a href="#services">Услуги</a>
+<a href="#process">Как работаем</a>
+<a href="#cases">Кейсы</a>
+<a href="#reviews">Отзывы</a>
+<a href="#faq">FAQ</a>
+<a href="#contacts">Контакты</a>
+</nav>
+<a href="https://t.me/kopen005" class="header__btn">Написать</a>
+</div>
+</header>
+<div class="mobile-nav">
+<a href="#services">Услуги</a>
+<a href="#process">Процесс</a>
+<a href="#cases">Кейсы</a>
+<a href="#reviews">Отзывы</a>
+<a href="#faq">FAQ</a>
+<a href="#contacts">Контакты</a>
+</div>
+<main>
+<section class="hero">
+<div class="container hero__inner">
+<div class="hero__content">
+<p class="eyebrow">Агрегатор цифровой безопасности</p>
+<h1 class="hero__title">PHANTOM <span>COMPANY</span></h1>
+<p class="hero__text">Полный спектр услуг по цифровой безопасности: восстановление доступа, аудит систем, проверка данных, конфиденциальные расследования. Работаем анонимно с 2024 года.</p>
+<div class="hero__stats">
+<div class="hero__stat"><strong>500+</strong><span>выполненных заказов</span></div>
+<div class="hero__stat"><strong>24/7</strong><span>поддержка</span></div>
+<div class="hero__stat"><strong>100%</strong><span>анонимность</span></div>
+</div>
+<div class="hero__actions">
+<a href="#services" class="btn btn--primary">Смотреть услуги</a>
+<a href="https://t.me/kopen005" class="btn btn--ghost">Консультация</a>
+</div>
+</div>
+<div class="hero__visual">
+<div class="phantom-card">
+<div class="phantom-ghost">
+<svg viewBox="0 0 100 100">
+<path d="M50 5C35 5 25 20 25 40V80L35 70L50 85L65 70L75 80V40C75 20 65 5 50 5Z" fill="#ff1a1a" opacity="0.85"/>
+<ellipse cx="40" cy="40" rx="6" ry="5" fill="#0a0a0a"/>
+<ellipse cx="60" cy="40" rx="6" ry="5" fill="#0a0a0a"/>
+<circle cx="42" cy="38" r="2" fill="#ff6666"/>
+<circle cx="62" cy="38" r="2" fill="#ff6666"/>
+<path d="M50 55 L50 42" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M50 42 L58 38" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M58 38 L58 36" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M50 55 L42 58" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+<path d="M42 58 L40 61" stroke="#0a0a0a" stroke-width="3" stroke-linecap="round"/>
+</svg>
+</div>
+<div class="phantom-name">PHANTOM</div>
+<div class="phantom-role">Cyber Security Team</div>
+<div class="phantom-divider"></div>
+<div class="phantom-desc">«Тсс... мы уже работаем»</div>
+<div class="phantom-badges">
+<div class="phantom-badge"><strong>500+</strong><span>заказов</span></div>
+<div class="phantom-badge"><strong>2024</strong><span>год основания</span></div>
+<div class="phantom-badge"><strong>10</strong><span>специалистов</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="services">
+<div class="container">
+<h2 class="section__title">Наши <span>услуги</span></h2>
+<p class="section__subtitle">Выберите услугу для получения подробной информации и точной стоимости</p>
+<div class="services-grid">
+
+<div class="service-card" onclick="openServiceModal('telegram')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">✈️</div><h3>Telegram</h3></div>
+<p class="service-desc">Полный доступ к аккаунту Telegram: переписки, контакты, каналы, удалённые сообщения.</p>
+<ul class="service-details"><li>Чтение всех чатов</li><li>Восстановление удалённых сообщений</li><li>Доступ к контактам</li><li>Срок: 1-12 часов</li></ul>
+<div class="service-tags"><span class="service-tag">Популярно</span><span class="service-tag">Быстро</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('whatsapp')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">💬</div><h3>WhatsApp</h3></div>
+<p class="service-desc">Доступ к WhatsApp: переписки, группы, медиафайлы, удалённые сообщения.</p>
+<ul class="service-details"><li>Чтение всех диалогов</li><li>Доступ к группам</li><li>Скачивание медиа</li><li>Срок: 1-24 часа</li></ul>
+<div class="service-tags"><span class="service-tag">Точно</span><span class="service-tag">Надёжно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('viber')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">📞</div><h3>Viber</h3></div>
+<p class="service-desc">Доступ к Viber: переписки, звонки, удалённые сообщения, контакты.</p>
+<ul class="service-details"><li>Чтение сообщений</li><li>История звонков</li><li>Восстановление удалённого</li><li>Срок: 1-24 часа</li></ul>
+<div class="service-tags"><span class="service-tag">Быстро</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('probiv')">
+<div class="service-price">от $50</div>
+<div class="service-header"><div class="service-icon">🔍</div><h3>Пробив номера</h3></div>
+<p class="service-desc">Узнайте полную информацию по номеру телефона: ФИО, адрес, паспорт, геолокация.</p>
+<ul class="service-details"><li>ФИО и дата рождения</li><li>Адрес проживания</li><li>Паспортные данные</li><li>Геолокация</li><li>Срок: от 30 минут</li></ul>
+<div class="service-tags"><span class="service-tag">Точно</span><span class="service-tag">Быстро</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('detalization')">
+<div class="service-price">от $150</div>
+<div class="service-header"><div class="service-icon">📊</div><h3>Детализация звонков</h3></div>
+<p class="service-desc">Полная детализация звонков и SMS: с кем общался, когда, сколько раз.</p>
+<ul class="service-details"><li>Входящие/исходящие звонки</li><li>SMS переписка</li><li>Период: до 12 месяцев</li><li>Срок: 2-24 часа</li></ul>
+<div class="service-tags"><span class="service-tag">Детально</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('geo')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">📍</div><h3>Геолокация</h3></div>
+<p class="service-desc">Определение местоположения человека по номеру телефона в реальном времени.</p>
+<ul class="service-details"><li>Текущее местоположение</li><li>История перемещений</li><li>Точность: до 50 метров</li><li>Срок: 30 минут</li></ul>
+<div class="service-tags"><span class="service-tag">Точно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('sites')">
+<div class="service-price">от $200</div>
+<div class="service-header"><div class="service-icon">🌐</div><h3>Взлом сайтов</h3></div>
+<p class="service-desc">Доступ к админ-панели, слив базы данных, DDoS-атаки, восстановление.</p>
+<ul class="service-details"><li>Доступ к админке</li><li>Слив баз данных</li><li>DDoS на конкурента</li><li>Срок: от 2 часов</li></ul>
+<div class="service-tags"><span class="service-tag">Мощно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('malware')">
+<div class="service-price">от $300</div>
+<div class="service-header"><div class="service-icon">💀</div><h3>Вредоносное ПО</h3></div>
+<p class="service-desc">Разработка стилеров, ратников, майнеров под вашу задачу.</p>
+<ul class="service-details"><li>Стилер паролей</li><li>RAT — удалённый доступ</li><li>Майнер крипты</li><li>Кейлоггер</li><li>Срок: от 24 часов</li></ul>
+<div class="service-tags"><span class="service-tag">Custom</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('audit')">
+<div class="service-price">от $150</div>
+<div class="service-header"><div class="service-icon">🔒</div><h3>Аудит безопасности</h3></div>
+<p class="service-desc">Проверка ваших систем на уязвимости с подробным отчётом.</p>
+<ul class="service-details"><li>SQL-инъекции</li><li>Проверка Wi-Fi</li><li>Анализ паролей</li><li>Отчёт с рекомендациями</li><li>Срок: от 3 часов</li></ul>
+<div class="service-tags"><span class="service-tag">Полезно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('email')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">📧</div><h3>Взлом почты</h3></div>
+<p class="service-desc">Доступ к Gmail, Yahoo, Outlook и другим почтовым сервисам.</p>
+<ul class="service-details"><li>Чтение писем</li><li>Восстановление удалённых</li><li>Доступ к вложениям</li><li>Срок: 1-12 часов</li></ul>
+<div class="service-tags"><span class="service-tag">Точно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('social')">
+<div class="service-price">от $100</div>
+<div class="service-header"><div class="service-icon">👤</div><h3>Соцсети</h3></div>
+<p class="service-desc">Доступ к Instagram, Facebook, TikTok и другим социальным сетям.</p>
+<ul class="service-details"><li>Чтение переписок</li><li>Доступ к фото/видео</li><li>Восстановление пароля</li><li>Срок: 1-24 часа</li></ul>
+<div class="service-tags"><span class="service-tag">Популярно</span></div>
+</div>
+
+<div class="service-card" onclick="openServiceModal('private')">
+<div class="service-price">от $500</div>
+<div class="service-header"><div class="service-icon">🕵️</div><h3>Конфиденциально</h3></div>
+<p class="service-desc">Любые деликатные задачи. Индивидуальный подход, полная анонимность.</p>
+<ul class="service-details"><li>Проверка на измену</li><li>Корпоративная разведка</li><li>Поиск активов</li><li>Срок: индивидуально</li></ul>
+<div class="service-tags"><span class="service-tag">Приватно</span></div>
+</div>
+
+</div>
+</div>
+</section>
+<style>
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.process-step{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px 24px;text-align:center;transition:all 0.3s;cursor:pointer;position:relative}
+.process-step:hover{border-color:var(--red);transform:translateY(-6px);box-shadow:var(--glow)}
+.process-num{display:inline-block;width:52px;height:52px;background:linear-gradient(135deg,var(--red),var(--darkred));color:#fff;border-radius:50%;text-align:center;line-height:52px;font-family:var(--font-display);font-weight:900;font-size:22px;margin-bottom:16px;box-shadow:var(--glow)}
+.process-step h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.process-step p{color:var(--dim);font-size:13px;line-height:1.6}
+.process-step .step-hint{display:none;margin-top:12px;padding:10px;background:var(--bg);border-radius:8px;font-size:12px;color:var(--dim)}
+.process-step:hover .step-hint{display:block}
+.cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.case-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;transition:all 0.3s;cursor:pointer}
+.case-card:hover{border-color:var(--red);box-shadow:var(--glow);transform:translateY(-6px)}
+.case-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.case-num{font-family:var(--font-display);font-size:14px;color:var(--red);font-weight:700;text-shadow:var(--glow)}
+.case-status{font-size:12px;color:var(--red);font-weight:600}
+.case-card h4{font-size:18px;font-weight:700;margin-bottom:14px}
+.case-details{list-style:none;margin-bottom:14px}
+.case-details li{color:var(--dim);font-size:13px;margin-bottom:6px;padding-left:16px;position:relative}
+.case-details li::before{content:'•';position:absolute;left:0;color:var(--red)}
+.case-result{color:var(--red);font-weight:700;font-size:14px;margin-top:12px;text-shadow:var(--glow)}
+</style>
+<section class="section" id="process">
+<div class="container">
+<h2 class="section__title">Как мы <span>работаем</span></h2>
+<p class="section__subtitle">Простой и понятный процесс — от заявки до результата</p>
+<div class="process-grid">
+<div class="process-step"><div class="process-num">1</div><h3>Заявка</h3><p>Описываете задачу в Telegram или WhatsApp</p><div class="step-hint">Просто напишите нам — ответим за 5 минут</div></div>
+<div class="process-step"><div class="process-num">2</div><h3>Анализ</h3><p>Оцениваем ситуацию и варианты</p><div class="step-hint">Расскажем что реально сделать</div></div>
+<div class="process-step"><div class="process-num">3</div><h3>Согласование</h3><p>Объясняем шаги, сроки, стоимость</p><div class="step-hint">Предоплата за расходники</div></div>
+<div class="process-step"><div class="process-num">4</div><h3>Выполнение</h3><p>Работаем быстро и конфиденциально</p><div class="step-hint">Держим в курсе на каждом этапе</div></div>
+<div class="process-step"><div class="process-num">5</div><h3>Результат</h3><p>Вы получаете готовый результат</p><div class="step-hint">Оплачиваете остаток</div></div>
+</div>
+</div>
+</section>
+<section class="section" id="cases">
+<div class="container">
+<h2 class="section__title">Топ <span>кейсы</span></h2>
+<p class="section__subtitle">Примеры успешно выполненных задач</p>
+<div class="cases-grid">
+<div class="case-card" onclick="openCaseModal(1)"><div class="case-header"><span class="case-num">КЕЙС #47</span><span class="case-status">✅</span></div><h4>Восстановление Telegram</h4><ul class="case-details"><li>Потеря доступа после взлома</li><li>Срок: 2 часа</li></ul><p class="case-result">✅ Доступ восстановлен</p></div>
+<div class="case-card" onclick="openCaseModal(2)"><div class="case-header"><span class="case-num">КЕЙС #34</span><span class="case-status">✅</span></div><h4>Пробив номера</h4><ul class="case-details"><li>Поиск ФИО по номеру</li><li>Срок: 30 минут</li></ul><p class="case-result">✅ Данные получены</p></div>
+<div class="case-card" onclick="openCaseModal(3)"><div class="case-header"><span class="case-num">КЕЙС #56</span><span class="case-status">✅</span></div><h4>Доступ к WhatsApp</h4><ul class="case-details"><li>Чтение переписки</li><li>Срок: 3 часа</li></ul><p class="case-result">✅ Переписка получена</p></div>
+<div class="case-card" onclick="openCaseModal(4)"><div class="case-header"><span class="case-num">КЕЙС #61</span><span class="case-status">✅</span></div><h4>Геолокация</h4><ul class="case-details"><li>Определение местоположения</li><li>Срок: 30 минут</li></ul><p class="case-result">✅ Найдено</p></div>
+<div class="case-card" onclick="openCaseModal(5)"><div class="case-header"><span class="case-num">КЕЙС #72</span><span class="case-status">✅</span></div><h4>Взлом почты</h4><ul class="case-details"><li>Доступ к Gmail</li><li>Срок: 4 часа</li></ul><p class="case-result">✅ Доступ получен</p></div>
+<div class="case-card" onclick="openCaseModal(6)"><div class="case-header"><span class="case-num">КЕЙС #83</span><span class="case-status">✅</span></div><h4>DDoS-атака</h4><ul class="case-details"><li>Вывод сайта из строя</li><li>Срок: 6 часов</li></ul><p class="case-result">✅ Сайт недоступен</p></div>
+<div class="case-card" onclick="openCaseModal(7)"><div class="case-header"><span class="case-num">КЕЙС #91</span><span class="case-status">✅</span></div><h4>Слив базы</h4><ul class="case-details"><li>База данных клиентов</li><li>Срок: 8 часов</li></ul><p class="case-result">✅ База получена</p></div>
+<div class="case-card" onclick="openCaseModal(8)"><div class="case-header"><span class="case-num">КЕЙС #99</span><span class="case-status">✅</span></div><h4>Аудит безопасности</h4><ul class="case-details"><li>Проверка сайта</li><li>Срок: 3 часа</li></ul><p class="case-result">✅ Уязвимости найдены</p></div>
+</div>
+</div>
+</section>
+<style>
+/* ОТЗЫВЫ */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-bottom:40px}
+.review-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all 0.3s;position:relative;overflow:hidden}
+.review-card::after{content:'';position:absolute;top:0;right:0;width:50px;height:50px;background:linear-gradient(135deg,transparent 50%,rgba(255,26,26,0.1) 50%);border-radius:0 14px 0 0}
+.review-card:hover{border-color:var(--red);transform:translateY(-4px);box-shadow:var(--glow)}
+.review-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.review-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--darkred));display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:18px;box-shadow:var(--glow)}
+.review-name{font-weight:700;font-size:14px}
+.review-service{font-size:11px;color:var(--red)}
+.stars{color:var(--red);font-size:16px;margin-bottom:12px;text-shadow:var(--glow)}
+.review-text{font-size:14px;font-style:italic;color:var(--text);margin-bottom:12px;line-height:1.6}
+.review-date{font-size:11px;color:var(--dim)}
+.review-form{background:var(--surface);border:2px solid var(--red);border-radius:16px;padding:36px;box-shadow:var(--glow);position:relative;overflow:hidden}
+.review-form::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(transparent,rgba(255,26,26,0.05),transparent 30%);animation:rotateGlow 8s linear infinite}
+@keyframes rotateGlow{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.review-form h3{font-family:var(--font-display);font-size:24px;margin-bottom:20px;color:var(--red);text-shadow:var(--glow);position:relative;z-index:1}
+.form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px;position:relative;z-index:1}
+.form-group{margin-bottom:16px;position:relative;z-index:1}
+.form-group label{display:block;font-size:13px;color:var(--dim);margin-bottom:6px;font-weight:600}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;font-family:inherit;transition:all 0.3s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--red);box-shadow:0 0 10px rgba(255,26,26,0.2)}
+.rating-input{display:flex;gap:10px}
+.rating-star{font-size:32px;color:var(--border);cursor:pointer;transition:all 0.2s}
+.rating-star:hover{transform:scale(1.2)}
+.rating-star.active{color:var(--red);text-shadow:var(--glow)}
+.submit-btn{display:inline-block;padding:16px 40px;background:var(--red);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.3s;font-family:inherit;letter-spacing:1px;position:relative;z-index:1;overflow:hidden}
+.submit-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:left 0.5s}
+.submit-btn:hover::before{left:100%}
+.submit-btn:hover{background:var(--neon);box-shadow:var(--glow-strong)}
+
+/* FAQ */
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;transition:all 0.3s}
+.faq-item:hover{border-color:var(--red)}
+.faq-question{padding:20px 24px;cursor:pointer;font-weight:700;font-size:15px;display:flex;justify-content:space-between;align-items:center;transition:all 0.3s}
+.faq-question:hover{color:var(--red)}
+.faq-question::after{content:'+';font-size:24px;color:var(--red);transition:transform 0.3s}
+.faq-item.active .faq-question::after{transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s ease;color:var(--dim);font-size:14px;padding:0 24px}
+.faq-item.active .faq-answer{max-height:500px;padding:0 24px 20px}
+
+/* КОНТАКТЫ */
+.contacts{text-align:center;padding:90px 0}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-top:40px}
+.contact-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;transition:all 0.3s;text-decoration:none;color:var(--text);position:relative;overflow:hidden}
+.contact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent);opacity:0;transition:opacity 0.3s}
+.contact-card:hover{border-color:var(--red);box-shadow:var(--glow);transform:translateY(-4px)}
+.contact-card:hover::before{opacity:1}
+.contact-icon{font-size:40px;margin-bottom:12px;filter:drop-shadow(0 0 10px rgba(255,26,26,0.5))}
+.contact-card h4{font-size:16px;font-weight:700;margin-bottom:6px}
+.contact-card p{color:var(--dim);font-size:13px}
+
+/* ЧАТ-ВИДЖЕТ */
+.chat-widget{position:fixed;bottom:30px;right:30px;z-index:2000}
+.chat-btn{width:60px;height:60px;border-radius:50%;background:var(--red);border:none;cursor:pointer;box-shadow:var(--glow-strong);display:flex;align-items:center;justify-content:center;font-size:28px;transition:all 0.3s;animation:chatPulse 2s ease-in-out infinite}
+@keyframes chatPulse{0%,100%{box-shadow:var(--glow)}50%{box-shadow:var(--glow-strong)}}
+.chat-btn:hover{transform:scale(1.15) rotate(5deg)}
+.chat-window{display:none;position:absolute;bottom:70px;right:0;width:340px;background:var(--surface);border:2px solid var(--red);border-radius:16px;overflow:hidden;box-shadow:var(--glow-strong);animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.chat-window.active{display:block}
+.chat-header{background:linear-gradient(135deg,var(--red),var(--darkred));padding:16px;color:#fff}
+.chat-header h4{font-size:14px;font-weight:700}
+.chat-header p{font-size:11px;opacity:0.8}
+.chat-body{height:300px;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-message{padding:12px 16px;border-radius:12px;max-width:85%;font-size:13px;line-height:1.5;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.chat-message.bot{background:var(--bg);border:1px solid var(--border);align-self:flex-start}
+.chat-message.user{background:var(--red);color:#fff;align-self:flex-end}
+.chat-footer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-footer input{flex:1;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;outline:none}
+.chat-footer input:focus{border-color:var(--red)}
+.chat-footer button{padding:12px 20px;background:var(--red);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:700;transition:all 0.3s}
+.chat-footer button:hover{background:var(--neon)}
+
+/* МАТРИЧНЫЙ ДОЖДЬ */
+.matrix-rain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:0.05;font-family:monospace;font-size:14px;color:var(--red)}
+
+/* ГЛИТЧ ЭФФЕКТ */
+.glitch{position:relative;animation:glitchEffect 3s infinite}
+@keyframes glitchEffect{0%,90%,100%{transform:translate(0)}92%{transform:translate(-2px,2px)}94%{transform:translate(2px,-2px)}96%{transform:translate(-2px,-2px)}98%{transform:translate(2px,2px)}}
+
+/* ТЕРМИНАЛ */
+.terminal{background:#000;border:1px solid var(--red);border-radius:8px;padding:20px;font-family:monospace;font-size:12px;color:var(--red);margin-top:20px;position:relative}
+.terminal::before{content:'● ● ●';position:absolute;top:10px;left:16px;color:#555;letter-spacing:6px}
+.terminal-content{margin-top:20px}
+.terminal-line{opacity:0;animation:typeIn 0.5s forwards}
+@keyframes typeIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.terminal-cursor{display:inline-block;width:8px;height:14px;background:var(--red);animation:blink 1s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+/* СКАН-ЛИНИЯ */
+.scanline{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px)}
+
+/* ФУТЕР */
+.footer{background:var(--surface);border-top:2px solid var(--darkred);padding:40px 0;text-align:center;position:relative}
+.footer p{color:var(--dim);font-size:12px;margin-bottom:8px}
+.footer a{color:var(--red);text-decoration:none}
+.footer-nav{display:flex;justify-content:center;gap:20px;margin-bottom:16px;flex-wrap:wrap}
+.footer-nav a{color:var(--dim);text-decoration:none;font-size:12px;transition:color 0.3s}
+.footer-nav a:hover{color:var(--red)}
+
+/* МОДАЛЬНЫЕ ОКНА */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:3000;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.active{display:flex}
+.modal-content{background:var(--surface);border:2px solid var(--red);border-radius:16px;padding:32px;max-width:500px;width:100%;position:relative;box-shadow:var(--glow-strong);animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+.modal-close{position:absolute;top:12px;right:16px;font-size:28px;color:var(--dim);cursor:pointer;background:none;border:none;transition:color 0.3s}
+.modal-close:hover{color:var(--red)}
+.modal-content h3{font-family:var(--font-display);color:var(--red);font-size:22px;margin-bottom:16px;text-shadow:var(--glow)}
+.modal-content p{color:var(--dim);font-size:14px;margin-bottom:12px;line-height:1.6}
+.modal-price{font-family:var(--font-display);color:var(--red);font-size:24px;margin-bottom:20px;text-shadow:var(--glow)}
+.modal-btn{display:inline-block;padding:14px 32px;background:var(--red);color:#fff;text-decoration:none;border-radius:4px;font-weight:700;transition:all 0.3s}
+.modal-btn:hover{background:var(--neon);box-shadow:var(--glow)}
+
+/* ЭФФЕКТ ПЕЧАТИ */
+.typing-effect{overflow:hidden;white-space:nowrap;animation:typing 3s steps(40);width:0}
+@keyframes typing{from{width:0}to{width:100%}}
+
+/* НЕОНОВАЯ КНОПКА-РАМКА */
+.neon-border{position:relative}
+.neon-border::before{content:'';position:absolute;inset:-2px;border-radius:6px;background:linear-gradient(90deg,var(--red),transparent,var(--red),transparent);background-size:200% 100%;animation:borderFlow 3s linear infinite;z-index:-1}
+@keyframes borderFlow{0%{background-position:0 0}100%{background-position:200% 0}}
+
+@media(max-width:768px){
+.hero__title{font-size:38px}
+.section__title{font-size:28px}
+.phantom-card{padding:30px 20px}
+.chat-widget{bottom:70px}
+}
+</style>
+<section class="section" id="reviews">
+<div class="container">
+<h2 class="section__title">Отзывы <span>клиентов</span></h2>
+<p class="section__subtitle">Что говорят о нас довольные клиенты</p>
+<div class="reviews-grid">
+<div class="review-card"><div class="review-header"><div class="review-avatar">А</div><div><div class="review-name">Андрей</div><div class="review-service">Telegram</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Восстановили доступ за 2 часа. Всё чётко. Рекомендую!"</p><div class="review-date">2 дня назад</div></div>
+<div class="review-card"><div class="review-header"><div class="review-avatar">М</div><div><div class="review-name">Марина</div><div class="review-service">Аудит</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Проверили сайт на уязвимости. Подробный отчёт. Спокойна!"</p><div class="review-date">5 дней назад</div></div>
+<div class="review-card"><div class="review-header"><div class="review-avatar">Д</div><div><div class="review-name">Дмитрий</div><div class="review-service">Пробив</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Узнал всё за 30 минут. Скорость поражает!"</p><div class="review-date">1 неделя назад</div></div>
+<div class="review-card"><div class="review-header"><div class="review-avatar">С</div><div><div class="review-name">Сергей</div><div class="review-service">WhatsApp</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Помогли узнать правду. Анонимно и профессионально."</p><div class="review-date">2 недели назад</div></div>
+<div class="review-card"><div class="review-header"><div class="review-avatar">О</div><div><div class="review-name">Олег</div><div class="review-service">Сайт</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Сделали невозможное за 3 часа. Спасибо!"</p><div class="review-date">3 недели назад</div></div>
+<div class="review-card"><div class="review-header"><div class="review-avatar">И</div><div><div class="review-name">Ирина</div><div class="review-service">Консультация</div></div></div><div class="stars">★★★★★</div><p class="review-text">"Очень грамотная консультация. Всё по делу."</p><div class="review-date">1 месяц назад</div></div>
+</div>
+<div class="review-form">
+<h3>Оставить отзыв</h3>
+<div class="form-row">
+<div class="form-group"><label>Имя</label><input type="text" id="reviewName" placeholder="Ваше имя"></div>
+<div class="form-group"><label>Услуга</label><select id="reviewService"><option>Telegram</option><option>WhatsApp</option><option>Пробив</option><option>Аудит</option><option>Другое</option></select></div>
+</div>
+<div class="form-group"><label>Оценка</label><div class="rating-input" id="ratingInput"><span class="rating-star" data-rating="1">★</span><span class="rating-star" data-rating="2">★</span><span class="rating-star" data-rating="3">★</span><span class="rating-star" data-rating="4">★</span><span class="rating-star" data-rating="5">★</span></div></div>
+<div class="form-group"><label>Отзыв</label><textarea id="reviewText" rows="4" placeholder="Поделитесь опытом..."></textarea></div>
+<button class="submit-btn" onclick="submitReview()">Отправить</button>
+</div>
+</div>
+</section>
+<section class="section" id="faq">
+<div class="container">
+<h2 class="section__title">Частые <span>вопросы</span></h2>
+<p class="section__subtitle">Ответы на самые популярные вопросы</p>
+<div class="faq-list">
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Это легально?</div><div class="faq-answer">Мы работаем в рамках консультационных услуг по цифровой безопасности. Все действия выполняются с согласия владельцев.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Как быстро вы работаете?</div><div class="faq-answer">Зависит от задачи. Простые запросы — от 30 минут. Сложные — до 3 дней.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Нужна ли предоплата?</div><div class="faq-answer">Да, предоплата 50% за расходники (сервера, прокси, инструменты). Остальное — по факту.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Вы анонимны?</div><div class="faq-answer">100% анонимность. Не запрашиваем лишних данных. Вся работа конфиденциальна.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Что если не получится?</div><div class="faq-answer">Вернём предоплату. Таких случаев практически не было.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Как связаться?</div><div class="faq-answer">Telegram @kopen005 или WhatsApp +380980206906. Отвечаем за 5 минут.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Какие гарантии?</div><div class="faq-answer">Работаем по факту. Оплата остатка только после результата.</div></div>
+<div class="faq-item" onclick="toggleFaq(this)"><div class="faq-question">Сколько стоят услуги?</div><div class="faq-answer">От $50 до $500+ в зависимости от сложности. Точная цена — после анализа задачи.</div></div>
+</div>
+</div>
+</section>
+<section class="section contacts" id="contacts">
+<div class="container">
+<h2 class="section__title">Свяжитесь <span>с нами</span></h2>
+<p class="section__subtitle">Ответим в течение 5 минут. Работаем 24/7</p>
+<div class="contact-grid">
+<a href="https://t.me/kopen005" class="contact-card" target="_blank"><div class="contact-icon">✈️</div><h4>Telegram</h4><p>@kopen005</p></a>
+<a href="https://wa.me/380980206906" class="contact-card" target="_blank"><div class="contact-icon">💬</div><h4>WhatsApp</h4><p>+380 98 020 6906</p></a>
+<a href="#" class="contact-card" onclick="toggleChat();return false;"><div class="contact-icon">📧</div><h4>Онлайн-чат</h4><p>Ответим мгновенно</p></a>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container">
+<div class="footer-nav">
+<a href="#services">Услуги</a>
+<a href="#process">Процесс</a>
+<a href="#cases">Кейсы</a>
+<a href="#reviews">Отзывы</a>
+<a href="#faq">FAQ</a>
+<a href="#contacts">Контакты</a>
+</div>
+<p>© 2026 PHANTOM COMPANY. Все права защищены.</p>
+<p>Работаем анонимно. Конфиденциально.</p>
+</div>
+</footer>
+
+<!-- ЧАТ-ВИДЖЕТ -->
+<div class="chat-widget">
+<button class="chat-btn" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chatWindow">
+<div class="chat-header"><h4>PHANTOM COMPANY</h4><p>Онлайн — отвечаем мгновенно</p></div>
+<div class="chat-body" id="chatBody">
+<div class="chat-message bot">Здравствуйте! Опишите задачу — поможем найти решение. 🔐</div>
+</div>
+<div class="chat-footer">
+<input type="text" id="chatInput" placeholder="Ваш вопрос..." onkeypress="if(event.key==='Enter')sendMessage()">
+<button onclick="sendMessage()">➤</button>
+</div>
+</div>
+</div>
+
+<!-- МОДАЛКА УСЛУГИ -->
+<div class="modal-overlay" id="serviceModal">
+<div class="modal-content">
+<button class="modal-close" onclick="closeServiceModal()">×</button>
+<h3 id="modalTitle">Услуга</h3>
+<p id="modalDesc">Описание</p>
+<div class="modal-price" id="modalPrice">от $100</div>
+<a href="https://t.me/kopen005" class="modal-btn">Заказать</a>
+</div>
+</div>
+
+<!-- МОДАЛКА КЕЙСА -->
+<div class="modal-overlay" id="caseModal">
+<div class="modal-content">
+<button class="modal-close" onclick="closeCaseModal()">×</button>
+<h3 id="caseModalTitle">Кейс</h3>
+<p id="caseModalDesc">Подробности</p>
+<a href="https://t.me/kopen005" class="modal-btn">Узнать подробнее</a>
+</div>
+</div>
+
+<!-- МАТРИЧНЫЙ ДОЖДЬ -->
+<canvas id="matrixCanvas" class="matrix-rain"></canvas>
+
+<!-- СКАН-ЛИНИЯ -->
+<div class="scanline"></div>
+
+<script>
+let selectedRating=0;
+document.querySelectorAll('.rating-star').forEach(star=>{star.addEventListener('click',function(){selectedRating=this.dataset.rating;document.querySelectorAll('.rating-star').forEach(s=>{s.classList.toggle('active',s.dataset.rating<=selectedRating);});});});
+function submitReview(){let name=document.getElementById('reviewName').value;let text=document.getElementById('reviewText').value;if(!name||!text||selectedRating===0){alert('Заполните все поля!');return;}alert('Спасибо! Отзыв появится после модерации.');document.getElementById('reviewName').value='';document.getElementById('reviewText').value='';selectedRating=0;document.querySelectorAll('.rating-star').forEach(s=>s.classList.remove('active'));}
+function toggleChat(){document.getElementById('chatWindow').classList.toggle('active');}
+function sendMessage(){let input=document.getElementById('chatInput');let msg=input.value.trim();if(!msg)return;let body=document.getElementById('chatBody');body.innerHTML+='<div class="chat-message user">'+msg+'</div>';input.value='';body.scrollTop=body.scrollHeight;setTimeout(()=>{body.innerHTML+='<div class="chat-message bot">Напишите в Telegram @kopen005 — там ответим быстрее. 🔐</div>';body.scrollTop=body.scrollHeight;},1000);}
+function toggleFaq(item){item.classList.toggle('active');}
+function openServiceModal(service){let titles={telegram:'Telegram',whatsapp:'WhatsApp',viber:'Viber',probiv:'Пробив номера',detalization:'Детализация',geo:'Геолокация',sites:'Взлом сайтов',malware:'Вредоносное ПО',audit:'Аудит безопасности',email:'Взлом почты',social:'Соцсети',private:'Конфиденциально'};document.getElementById('modalTitle').textContent=titles[service]||'Услуга';document.getElementById('modalDesc').textContent='Подробности в Telegram @kopen005';document.getElementById('serviceModal').classList.add('active');}
+function closeServiceModal(){document.getElementById('serviceModal').classList.remove('active');}
+function openCaseModal(num){document.getElementById('caseModalTitle').textContent='Кейс #'+num;document.getElementById('caseModalDesc').textContent='Подробности в Telegram @kopen005';document.getElementById('caseModal').classList.add('active');}
+function closeCaseModal(){document.getElementById('caseModal').classList.remove('active');}
+// ЧАСТИЦЫ
+const particles=document.getElementById('particles');
+for(let i=0;i<50;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDelay=Math.random()*15+'s';p.style.animationDuration=(Math.random()*10+5)+'s';particles.appendChild(p);}
+// МАТРИЧНЫЙ ДОЖДЬ
+const canvas=document.getElementById('matrixCanvas');const ctx=canvas.getContext('2d');canvas.width=window.innerWidth;canvas.height=window.innerHeight;const chars='01PHANTOM';const fontSize=14;let drops=[];for(let i=0;i<canvas.width/fontSize;i++){drops[i]=Math.random()*-100;}function drawMatrix(){ctx.fillStyle='rgba(10,10,10,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#ff1a1a';ctx.font=fontSize+'px monospace';for(let i=0;i<drops.length;i++){const text=chars[Math.floor(Math.random()*chars.length)];ctx.fillText(text,i*fontSize,drops[i]*fontSize);if(drops[i]*fontSize>canvas.height&&Math.random()>0.975){drops[i]=0;}drops[i]++;}}setInterval(drawMatrix,50);
+</script>
+</body>
+</html>
+<style>
+/* КАЛЬКУЛЯТОР */
+.calculator{background:var(--surface);border:2px solid var(--red);border-radius:16px;padding:36px;margin-top:50px;box-shadow:var(--glow);position:relative;overflow:hidden}
+.calculator::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--darkred),var(--red))}
+.calculator h3{font-family:var(--font-display);color:var(--red);font-size:24px;margin-bottom:8px;text-align:center;text-shadow:var(--glow)}
+.calculator p{color:var(--dim);font-size:13px;text-align:center;margin-bottom:24px}
+.calc-form{max-width:500px;margin:0 auto}
+.calc-group{margin-bottom:18px}
+.calc-group label{display:block;color:var(--text);font-size:14px;font-weight:600;margin-bottom:8px}
+.calc-group select,.calc-group input{width:100%;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:inherit;outline:none;transition:all 0.3s}
+.calc-group select:focus,.calc-group input:focus{border-color:var(--red);box-shadow:0 0 10px rgba(255,26,26,0.2)}
+.calc-result{background:var(--bg);border:1px solid var(--red);border-radius:12px;padding:20px;text-align:center;margin-top:20px;display:none}
+.calc-result.active{display:block;animation:fadeIn 0.5s ease}
+.calc-price{font-family:var(--font-display);font-size:36px;color:var(--red);text-shadow:var(--glow-strong);font-weight:900}
+.calc-note{color:var(--dim);font-size:12px;margin-top:8px}
+</style>
+<section class="section" id="calculator">
+<div class="container">
+<div class="calculator">
+<h3>Калькулятор стоимости</h3>
+<p>Рассчитайте примерную стоимость услуги. Точная цена зависит от расходов.</p>
+<div class="calc-form">
+<div class="calc-group"><label>Выберите услугу</label><select id="calcService"><option value="0">-- Выберите --</option><option value="100">Telegram</option><option value="100">WhatsApp</option><option value="100">Viber</option><option value="50">Пробив номера</option><option value="150">Детализация</option><option value="100">Геолокация</option><option value="200">Взлом сайта</option><option value="300">Вредоносное ПО</option><option value="150">Аудит безопасности</option><option value="100">Взлом почты</option><option value="100">Соцсети</option><option value="500">Конфиденциально</option></select></div>
+<div class="calc-group"><label>Сложность</label><select id="calcComplexity"><option value="1">Низкая</option><option value="2" selected>Средняя</option><option value="3">Высокая</option><option value="4">Экстремальная</option></select></div>
+<div class="calc-group"><label>Срочность</label><select id="calcUrgency"><option value="1">Обычная (1-3 дня)</option><option value="1.5" selected>Быстрая (12-24 часа)</option><option value="2">Срочная (1-6 часов)</option><option value="3">Мгновенная (30 минут)</option></select></div>
+<button class="submit-btn" onclick="calculatePrice()" style="width:100%">Рассчитать</button>
+<div class="calc-result" id="calcResult">
+<div class="calc-price" id="calcPrice">$0</div>
+<div class="calc-note">* Точная стоимость зависит от расходов: сервера, прокси, инструменты. Предоплата рассчитывается индивидуально.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<style>
+/* ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ */
+.hacker-ticker{background:var(--surface);border-top:1px solid var(--darkred);border-bottom:1px solid var(--darkred);padding:12px 0;overflow:hidden;margin-top:20px}
+.ticker-content{display:flex;gap:30px;animation:tickerScroll 30s linear infinite;white-space:nowrap}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{color:var(--red);font-family:var(--font-tech);font-size:12px;letter-spacing:2px;text-shadow:var(--glow)}
+.countdown{display:flex;justify-content:center;gap:20px;margin-top:30px}
+.countdown-item{text-align:center}
+.countdown-num{font-family:var(--font-display);font-size:40px;font-weight:900;color:var(--red);text-shadow:var(--glow-strong);display:block}
+.countdown-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:2px}
+</style>
+
+<!-- БЕГУЩАЯ СТРОКА -->
+<div class="hacker-ticker">
+<div class="ticker-content" id="tickerContent">
+<span class="ticker-item">PHANTOM COMPANY</span><span class="ticker-item">◆</span>
+<span class="ticker-item">ВОССТАНОВЛЕНИЕ ДОСТУПА</span><span class="ticker-item">◆</span>
+<span class="ticker-item">АУДИТ БЕЗОПАСНОСТИ</span><span class="ticker-item">◆</span>
+<span class="ticker-item">АНОНИМНОСТЬ ГАРАНТИРОВАНА</span><span class="ticker-item">◆</span>
+<span class="ticker-item">РАБОТАЕМ 24/7</span><span class="ticker-item">◆</span>
+<span class="ticker-item">500+ ЗАКАЗОВ</span><span class="ticker-item">◆</span>
+<span class="ticker-item">PHANTOM COMPANY</span><span class="ticker-item">◆</span>
+<span class="ticker-item">ВОССТАНОВЛЕНИЕ ДОСТУПА</span><span class="ticker-item">◆</span>
+<span class="ticker-item">АУДИТ БЕЗОПАСНОСТИ</span><span class="ticker-item">◆</span>
+<span class="ticker-item">АНОНИМНОСТЬ ГАРАНТИРОВАНА</span><span class="ticker-item">◆</span>
+<span class="ticker-item">РАБОТАЕМ 24/7</span><span class="ticker-item">◆</span>
+<span class="ticker-item">500+ ЗАКАЗОВ</span><span class="ticker-item">◆</span>
+</div>
+</div>
+
+<script>
+// КАЛЬКУЛЯТОР СТОИМОСТИ
+function calculatePrice(){
+const service=parseFloat(document.getElementById('calcService').value);
+const complexity=parseFloat(document.getElementById('calcComplexity').value);
+const urgency=parseFloat(document.getElementById('calcUrgency').value);
+if(service===0){alert('Выберите услугу!');return;}
+const total=Math.round(service*complexity*urgency);
+document.getElementById('calcPrice').textContent='$'+total;
+document.getElementById('calcResult').classList.add('active');
+}
+
+// КЛОНИРОВАНИЕ БЕГУЩЕЙ СТРОКИ ДЛЯ БЕСКОНЕЧНОСТИ
+const ticker=document.getElementById('tickerContent');
+ticker.innerHTML+=ticker.innerHTML;
+</script>
