@@ -6,7 +6,7 @@ import urllib.error
 app = Flask(__name__)
 
 SUPABASE_URL = "https://hkwikcffswxoizyevqsh.supabase.co"
-SUPABASE_KEY = "sb_publishable_ChkoCcwWUfiif523Osw2-Q_klJYxRJr"
+SUPABASE_KEY = "sb_secret_zH1JauEoz8XIHxrT8M0meA_d_aXRu8Z"
 
 @app.route('/api/reviews', methods=['POST'])
 def submit_review():
