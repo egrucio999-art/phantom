@@ -5,8 +5,9 @@ import urllib.error
 
 app = Flask(__name__)
 
-SUPABASE_URL = "https://hkwikcffswxoizyevqsh.supabase.co"
-SUPABASE_KEY = "SUPABASE_KEY_PLACEHOLDER"
+SUPABASE_URL = "НОВЫЙ_URL"
+import os
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY', '')
 
 @app.route('/api/reviews', methods=['POST'])
 def submit_review():
@@ -56,8 +57,3 @@ def get_reviews():
         return jsonify(result), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return app.send_static_file('index.html')

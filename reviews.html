@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отзывы — PHANTOM Digital Services</title>
+<meta name="description" content="Отзывы клиентов PHANTOM Digital Services. Реальные истории восстановления доступа, проверок и аудита.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f12;--surface:#13161b;--surface-2:#181c22;--border:#232830;--border-strong:#2f3540;
+  --text:#e8eaed;--text-dim:#8b929d;--text-mute:#5b616b;
+  --accent:#5b8db8;--accent-soft:rgba(91,141,184,0.12);--accent-line:rgba(91,141,184,0.35);
+  --radius:10px;--radius-lg:16px;--max:1180px;
+  --font-body:'Manrope',-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#0d0f12}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.header{position:sticky;top:0;z-index:100;background:rgba(13,15,18,0.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand__mark{width:34px;height:34px}
+.brand__mark svg{width:100%;height:100%;display:block}
+.brand__text{display:flex;flex-direction:column;line-height:1.1}
+.brand__name{font-size:15px;font-weight:700;letter-spacing:0.18em}
+.brand__sub{font-size:9px;letter-spacing:0.32em;color:var(--text-mute);text-transform:uppercase;margin-top:3px}
+.nav{display:flex;gap:28px;align-items:center}
+.nav a{font-size:13.5px;color:var(--text-dim);font-weight:500;transition:color .2s}
+.nav a:hover{color:var(--text)}
+.nav a.active{color:var(--text)}
+.header__cta{font-size:13px;font-weight:600;padding:10px 20px;border:1px solid var(--border-strong);border-radius:8px;transition:all .2s}
+.header__cta:hover{border-color:var(--accent);background:var(--accent-soft)}
+.burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid var(--border-strong);border-radius:8px}
+.burger span{display:block;width:16px;height:1.5px;background:var(--text);position:relative}
+.burger span::before,.burger span::after{content:'';position:absolute;left:0;width:16px;height:1.5px;background:var(--text)}
+.burger span::before{top:-5px}.burger span::after{top:5px}
+.mobile-menu{display:none;position:fixed;inset:72px 0 0 0;background:var(--bg);z-index:99;padding:32px 24px;flex-direction:column;gap:8px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:16px 0;font-size:18px;font-weight:500;border-bottom:1px solid var(--border)}
+
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--border)}
+.hero__inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-dim);margin-bottom:24px;font-weight:600}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--accent)}
+.hero h1{font-size:clamp(30px,3.6vw,44px);font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin-bottom:20px}
+.hero p{color:var(--text-dim);font-size:16px;max-width:520px;line-height:1.7}
+
+.summary{background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--border-strong);border-radius:var(--radius-lg);padding:36px 32px}
+.summary__top{display:flex;align-items:center;gap:28px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.summary__score{text-align:center;flex-shrink:0}
+.summary__score strong{display:block;font-size:52px;font-weight:700;line-height:1;letter-spacing:-0.03em}
+.summary__score span{font-size:12px;color:var(--text-mute);text-transform:uppercase;letter-spacing:0.14em;margin-top:6px;display:block}
+.summary__stars{color:var(--accent);font-size:20px;letter-spacing:2px;margin-bottom:6px}
+.summary__count{font-size:13.5px;color:var(--text-dim)}
+.summary__bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--text-dim)}
+.bar__label{width:44px;flex-shrink:0}
+.bar__track{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden}
+.bar__fill{height:100%;background:var(--accent);border-radius:3px;transition:width .6s ease}
+.bar__count{width:32px;text-align:right;color:var(--text-mute);font-size:12.5px}
+
+.filters{padding:28px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:12px;color:var(--text-mute);letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-right:8px}
+.chip{padding:8px 16px;border:1px solid var(--border);border-radius:20px;font-size:13px;color:var(--text-dim);transition:all .2s;cursor:pointer}
+.chip:hover{border-color:var(--border-strong);color:var(--text)}
+.chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
+
+.reviews{padding:48px 0 96px}
+.reviews__list{display:flex;flex-direction:column;gap:0}
+.review{padding:32px 0;border-bottom:1px solid var(--border)}
+.review:last-child{border-bottom:none}
+.review__head{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.review__avatar{width:46px;height:46px;flex-shrink:0;border-radius:50%;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--accent)}
+.review__meta{flex:1;min-width:0}
+.review__name{font-weight:700;font-size:15px;margin-bottom:2px}
+.review__service{font-size:12.5px;color:var(--text-mute)}
+.review__date{font-size:12.5px;color:var(--text-mute);flex-shrink:0}
+.review__stars{color:var(--accent);font-size:14px;letter-spacing:1px;margin-bottom:12px}
+.review__text{font-size:15px;color:var(--text);line-height:1.7;max-width:820px}
+.review__reply{margin-top:20px;margin-left:62px;padding:18px 22px;background:var(--surface);border-left:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;max-width:760px}
+.review__reply-head{font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.review__reply-text{font-size:14px;color:var(--text-dim);line-height:1.65}
+
+.empty{padding:64px 0;text-align:center;color:var(--text-mute);font-size:15px}
+
+.form-section{padding:72px 0 96px;border-top:1px solid var(--border);background:var(--surface)}
+.form-wrap{max-width:680px;margin:0 auto}
+.form-wrap h2{font-size:clamp(22px,2.4vw,28px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px;text-align:center}
+.form-wrap > p{color:var(--text-dim);text-align:center;margin-bottom:40px;font-size:15px}
+.form{display:flex;flex-direction:column;gap:18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:12.5px;color:var(--text-dim);font-weight:500;letter-spacing:0.02em}
+.field input,.field textarea,.field select{width:100%;padding:13px 15px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:16px;font-family:inherit;outline:none;transition:all .2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);background:var(--surface-2)}
+.field textarea{resize:vertical;min-height:120px;line-height:1.55}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b929d' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:44px}
+.rating{display:flex;gap:8px;align-items:center}
+.rating__star{font-size:30px;color:var(--border-strong);cursor:pointer;transition:all .15s;line-height:1;user-select:none}
+.rating__star:hover{transform:scale(1.1)}
+.rating__star.active{color:var(--accent)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:14.5px;font-weight:600;padding:15px 28px;border-radius:var(--radius);transition:all .2s;white-space:nowrap;width:100%}
+.btn--primary{background:var(--accent);color:#0d0f12}
+.btn--primary:hover{background:#6f9dc4;transform:translateY(-1px)}
+.form__note{font-size:12px;color:var(--text-mute);text-align:center;line-height:1.6}
+.form__status{font-size:13.5px;color:var(--accent);text-align:center;display:none;padding:16px;background:var(--accent-soft);border-radius:var(--radius);border:1px solid var(--accent-line)}
+.form__status.show{display:block}
+
+.footer{padding:56px 0 40px;border-top:1px solid var(--border);background:var(--surface)}
+.footer__inner{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:40px}
+.footer__brand{max-width:320px}
+.footer__brand p{font-size:13px;color:var(--text-mute);line-height:1.65;margin-top:14px}
+.footer__cols{display:flex;gap:64px;flex-wrap:wrap}
+.footer__col h5{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-mute);font-weight:600;margin-bottom:16px}
+.footer__col a{display:block;font-size:13.5px;color:var(--text-dim);margin-bottom:10px;transition:color .2s}
+.footer__col a:hover{color:var(--text)}
+.footer__bottom{padding-top:32px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--text-mute)}
+
+@media(max-width:900px){
+  .hero__inner{grid-template-columns:1fr;gap:40px}
+  .nav,.header__cta{display:none}
+  .burger{display:flex}
+  .summary__top{flex-direction:column;align-items:flex-start;gap:20px}
+  .review__reply{margin-left:0}
+}
+@media(max-width:600px){
+  .wrap{padding:0 20px}
+  .hero{padding:48px 0 32px}
+  .form-section{padding:48px 0 64px}
+  .row{grid-template-columns:1fr}
+  .review__head{flex-wrap:wrap;gap:12px}
+  .review__date{width:100%;padding-left:62px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="wrap header__inner">
+    <a href="/" class="brand">
+      <span class="brand__mark">
+        <svg viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="18.5" stroke="#5b8db8" stroke-width="1" opacity="0.5"/>
+          <path d="M20 6 L26 12 L24 22 L20 34 L16 22 L14 12 Z" stroke="#e8eaed" stroke-width="1.1" fill="none" stroke-linejoin="round"/>
+          <circle cx="17.5" cy="17" r="1.1" fill="#5b8db8"/>
+          <circle cx="22.5" cy="17" r="1.1" fill="#5b8db8"/>
+        </svg>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">PHANTOM</span>
+        <span class="brand__sub">Digital Services</span>
+      </span>
+    </a>
+    <nav class="nav">
+      <a href="/#services">Направления</a>
+      <a href="/#process">Процесс</a>
+      <a href="/#business">Для бизнеса</a>
+      <a href="/reviews.html" class="active">Отзывы</a>
+      <a href="/#contact">Контакты</a>
+    </nav>
+    <a href="/#contact" class="header__cta">Оставить запрос</a>
+    <button class="burger" onclick="document.getElementById('mobileMenu').classList.toggle('open')" aria-label="Меню"><span></span></button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#services" onclick="this.parentElement.classList.remove('open')">Направления</a>
+  <a href="/#process" onclick="this.parentElement.classList.remove('open')">Процесс</a>
+  <a href="/#business" onclick="this.parentElement.classList.remove('open')">Для бизнеса</a>
+  <a href="/reviews.html">Отзывы</a>
+  <a href="/#contact" onclick="this.parentElement.classList.remove('open')">Контакты</a>
+</div>
+
+<main>
+
+<section class="hero">
+  <div class="wrap hero__inner">
+    <div>
+      <span class="eyebrow">Отзывы клиентов</span>
+      <h1>Что говорят те, кто уже работал с нами</h1>
+      <p>Мы не удаляем негативные отзывы и не редактируем их. Всё, что вы видите здесь — реальные истории клиентов, включая те, где что-то пошло не по плану.</p>
+    </div>
+    <div class="summary" id="summary">
+      <div class="summary__top">
+        <div class="summary__score">
+          <strong id="avgScore">—</strong>
+          <span>из 5</span>
+        </div>
+        <div>
+          <div class="summary__stars" id="avgStars">★★★★★</div>
+          <div class="summary__count">На основе <span id="totalCount">—</span> отзывов</div>
+        </div>
+      </div>
+      <div class="summary__bars" id="bars"></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="filters" id="filters">
+    <span class="filter-label">Фильтр</span>
+    <span class="chip active" data-filter="all">Все</span>
+    <span class="chip" data-filter="5">5 звёзд</span>
+    <span class="chip" data-filter="4">4 звезды</span>
+    <span class="chip" data-filter="3">3 звезды</span>
+    <span class="chip" data-filter="2">2 звезды</span>
+    <span class="chip" data-filter="with-reply">С ответом</span>
+  </div>
+</div>
+
+<section class="reviews">
+  <div class="wrap">
+    <div class="reviews__list" id="reviewsList"></div>
+    <div class="empty" id="empty" style="display:none">По выбранному фильтру отзывов нет.</div>
+  </div>
+</section>
+
+<section class="form-section" id="leave">
+  <div class="wrap form-wrap">
+    <h2>Оставить отзыв</h2>
+    <p>Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
+    <form class="form" id="reviewForm" onsubmit="submitReview(event)">
+      <div class="row">
+        <div class="field">
+          <label for="r-name">Имя или инициал *</label>
+          <input type="text" id="r-name" required maxlength="40" placeholder="Андрей или А.">
+        </div>
+        <div class="field">
+          <label for="r-service">Направление *</label>
+          <select id="r-service" required>
+            <option value="">Выберите</option>
+            <option>Восстановление доступа</option>
+            <option>Проверка информации</option>
+            <option>Аудит и защита</option>
+            <option>Для бизнеса</option>
+            <option>Другое</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Оценка *</label>
+        <div class="rating" id="ratingInput">
+          <span class="rating__star" data-rating="1">★</span>
+          <span class="rating__star" data-rating="2">★</span>
+          <span class="rating__star" data-rating="3">★</span>
+          <span class="rating__star" data-rating="4">★</span>
+          <span class="rating__star" data-rating="5">★</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="r-text">Отзыв *</label>
+        <textarea id="r-text" required maxlength="900" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
+      </div>
+      <button type="submit" class="btn btn--primary">Отправить отзыв</button>
+      <p class="form__note">Отзыв публикуется после короткой проверки — обычно в течение нескольких часов. Мы не редактируем текст, только отсекаем спам.</p>
+      <div class="form__status" id="formStatus">Спасибо! Отзыв отправлен на проверку.</div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <a href="/" class="brand">
+          <span class="brand__mark">
+            <svg viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="18.5" stroke="#5b8db8" stroke-width="1" opacity="0.5"/>
+              <path d="M20 6 L26 12 L24 22 L20 34 L16 22 L14 12 Z" stroke="#e8eaed" stroke-width="1.1" fill="none" stroke-linejoin="round"/>
+              <circle cx="17.5" cy="17" r="1.1" fill="#5b8db8"/>
+              <circle cx="22.5" cy="17" r="1.1" fill="#5b8db8"/>
+            </svg>
+          </span>
+          <span class="brand__text">
+            <span class="brand__name">PHANTOM</span>
+            <span class="brand__sub">Digital Services</span>
+          </span>
+        </a>
+        <p>Конфиденциальные цифровые услуги для частных лиц и компаний. Работаем по договору, соблюдаем NDA.</p>
+      </div>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h5>Разделы</h5>
+          <a href="/#services">Направления</a>
+          <a href="/#business">Для бизнеса</a>
+          <a href="/reviews.html">Отзывы</a>
+        </div>
+        <div class="footer__col">
+          <h5>Связь</h5>
+          <a href="https://t.me/kopen005" target="_blank" rel="noopener">Telegram</a>
+          <a href="/#contact">Оставить запрос</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span id="year"></span> PHANTOM Digital Services.</span>
+      <span>Работаем конфиденциально. По договору и NDA.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+let allReviews = [];
+let summary = null;
+let currentFilter = 'all';
+
+function formatDate(iso){
+  const d = new Date(iso);
+  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+function stars(n){ return '★'.repeat(n) + '☆'.repeat(5-n); }
+
+function renderSummary(){
+  if(!summary) return;
+  document.getElementById('avgScore').textContent = summary.rating.toFixed(1);
+  document.getElementById('totalCount').textContent = summary.total;
+  const starCount = Math.round(summary.rating);
+  document.getElementById('avgStars').textContent = stars(starCount);
+  
+  const bars = document.getElementById('bars');
+  bars.innerHTML = '';
+  for(let i = 5; i >= 1; i--){
+    const count = summary.distribution[i] || 0;
+    const pct = summary.total > 0 ? (count / summary.total) * 100 : 0;
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.innerHTML = '<span class="bar__label">' + i + ' ★</span>' +
+      '<span class="bar__track"><span class="bar__fill" style="width:' + pct + '%"></span></span>' +
+      '<span class="bar__count">' + count + '</span>';
+    bars.appendChild(bar);
+  }
+}
+
+function renderReviews(){
+  const list = document.getElementById('reviewsList');
+  const empty = document.getElementById('empty');
+  list.innerHTML = '';
+  
+  let filtered = allReviews;
+  if(currentFilter === 'with-reply'){
+    filtered = allReviews.filter(r => r.reply);
+  } else if(currentFilter !== 'all'){
+    filtered = allReviews.filter(r => String(r.rating) === currentFilter);
+  }
+  
+  if(filtered.length === 0){
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  
+  filtered.forEach(r => {
+    const el = document.createElement('article');
+    el.className = 'review';
+    let replyHTML = '';
+    if(r.reply){
+      replyHTML = '<div class="review__reply">' +
+        '<div class="review__reply-head">Ответ PHANTOM</div>' +
+        '<div class="review__reply-text">' + escapeHTML(r.reply) + '</div>' +
+      '</div>';
+    }
+    el.innerHTML =
+      '<div class="review__head">' +
+        '<div class="review__avatar">' + escapeHTML(r.initial) + '</div>' +
+        '<div class="review__meta">' +
+          '<div class="review__name">' + escapeHTML(r.name) + '</div>' +
+          '<div class="review__service">' + escapeHTML(r.service) + '</div>' +
+        '</div>' +
+        '<div class="review__date">' + formatDate(r.date) + '</div>' +
+      '</div>' +
+      '<div class="review__stars">' + stars(r.rating) + '</div>' +
+      '<p class="review__text">' + escapeHTML(r.text) + '</p>' +
+      replyHTML;
+    list.appendChild(el);
+  });
+}
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+document.getElementById('filters').addEventListener('click', e => {
+  if(!e.target.classList.contains('chip')) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  currentFilter = e.target.dataset.filter;
+  renderReviews();
+});
+
+let selectedRating = 0;
+document.querySelectorAll('.rating__star').forEach(star => {
+  star.addEventListener('click', function(){
+    selectedRating = parseInt(this.dataset.rating);
+    document.querySelectorAll('.rating__star').forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.rating) <= selectedRating);
+    });
+  });
+  star.addEventListener('mouseenter', function(){
+    const val = parseInt(this.dataset.rating);
+    document.querySelectorAll('.rating__star').forEach(s => {
+      s.classList.toggle('active', parseInt(s.dataset.rating) <= val);
+    });
+  });
+});
+document.getElementById('ratingInput').addEventListener('mouseleave', () => {
+  document.querySelectorAll('.rating__star').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.rating) <= selectedRating);
+  });
+});
+
+async function submitReview(e){
+  e.preventDefault();
+  if(selectedRating === 0){ alert('Поставьте оценку'); return; }
+  
+  const data = {
+    name: document.getElementById('r-name').value.trim(),
+    service: document.getElementById('r-service').value,
+    rating: selectedRating,
+    text: document.getElementById('r-text').value.trim(),
+    date: new Date().toISOString().split('T')[0]
+  };
+  
+  // Здесь — отправка на бэкенд или в Telegram-бот (см. инструкцию ниже).
+  // Пока просто показываем статус.
+  document.getElementById('formStatus').classList.add('show');
+  e.target.reset();
+  selectedRating = 0;
+  document.querySelectorAll('.rating__star').forEach(s => s.classList.remove('active'));
+  
+  // Заготовка под реальную отправку:
+  // await fetch('https://api.telegram.org/bot<TOKEN>/sendMessage', {
+  //   method:'POST', headers:{'Content-Type':'application/json'},
+  //   body: JSON.stringify({chat_id:'<CHAT_ID>', text: JSON.stringify(data, null, 2)})
+  // });
+}
+
+async function loadReviews(){
+  try{
+    const res = await fetch('reviews.json?v=' + Date.now());
+    const data = await res.json();
+    allReviews = data.reviews;
+    summary = data.summary;
+    renderSummary();
+    renderReviews();
+  } catch(err){
+    console.error('Не удалось загрузить reviews.json', err);
+    document.getElementById('reviewsList').innerHTML = '<div class="empty">Отзывы временно недоступны.</div>';
+  }
+}
+
+loadReviews();
+</script>
+
+</body>
+</html>
