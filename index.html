@@ -584,7 +584,25 @@ function renderPreviewReviews(){
       const grid = document.getElementById('rpGrid');
       if(!grid) return;
       // топ-3: с ответом + 5 звёзд
-      const pick = data.reviews.filter(r => r.rating >= 4).slice(0, 3);
+      // Берём по одному отзыву из каждой ключевой услуги, чтобы не было дублей
+      const services = ['Восстановление доступа', 'Проверка информации', 'Аудит и защита', 'Для бизнеса'];
+      const pick = [];
+      const usedIds = new Set();
+      for (const svc of services) {
+        if (pick.length >= 3) break;
+        const found = data.reviews.find(r =>
+          r.service_ru === svc && r.rating >= 4 && !usedIds.has(r.id)
+        );
+        if (found) { pick.push(found); usedIds.add(found.id); }
+      }
+      // Добираем, если каких-то услуг не хватило
+      for (const r of data.reviews) {
+        if (pick.length >= 3) break;
+        if (!usedIds.has(r.id) && r.rating >= 4) {
+          pick.push(r);
+          usedIds.add(r.id);
+        }
+      }
       grid.innerHTML = '';
       pick.forEach(r => {
         const name = lang === 'uk' ? r.name_uk : r.name_ru;
