@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Отзывы — PHANTOM Digital Services</title>
-<meta name="description" content="Отзывы клиентов PHANTOM Digital Services. Реальные истории восстановления доступа, проверок и аудита.">
+<meta name="description" content="Отзывы клиентов PHANTOM Digital Services. Реальные истории — восстановление доступа, проверки, аудит.">
 <meta name="robots" content="index, follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,10 +32,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .brand__text{display:flex;flex-direction:column;line-height:1.1}
 .brand__name{font-size:15px;font-weight:700;letter-spacing:0.18em}
 .brand__sub{font-size:9px;letter-spacing:0.32em;color:var(--text-mute);text-transform:uppercase;margin-top:3px}
-.nav{display:flex;gap:28px;align-items:center}
+.nav{display:flex;gap:24px;align-items:center}
 .nav a{font-size:13.5px;color:var(--text-dim);font-weight:500;transition:color .2s}
 .nav a:hover{color:var(--text)}
 .nav a.active{color:var(--text)}
+.header__right{display:flex;align-items:center;gap:14px}
+.lang-switch{display:flex;align-items:center;gap:2px;border:1px solid var(--border-strong);border-radius:8px;padding:3px}
+.lang-switch button{font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;color:var(--text-mute);letter-spacing:0.05em;transition:all .2s}
+.lang-switch button:hover{color:var(--text)}
+.lang-switch button.active{background:var(--accent-soft);color:var(--accent)}
 .header__cta{font-size:13px;font-weight:600;padding:10px 20px;border:1px solid var(--border-strong);border-radius:8px;transition:all .2s}
 .header__cta:hover{border-color:var(--accent);background:var(--accent-soft)}
 .burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;border:1px solid var(--border-strong);border-radius:8px}
@@ -73,8 +78,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .chip:hover{border-color:var(--border-strong);color:var(--text)}
 .chip.active{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
 
-.reviews{padding:48px 0 96px}
-.reviews__list{display:flex;flex-direction:column;gap:0}
+.reviews{padding:48px 0 40px}
+.reviews__list{display:flex;flex-direction:column}
 .review{padding:32px 0;border-bottom:1px solid var(--border)}
 .review:last-child{border-bottom:none}
 .review__head{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
@@ -88,6 +93,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .review__reply{margin-top:20px;margin-left:62px;padding:18px 22px;background:var(--surface);border-left:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;max-width:760px}
 .review__reply-head{font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
 .review__reply-text{font-size:14px;color:var(--text-dim);line-height:1.65}
+
+.pagination{display:flex;justify-content:center;align-items:center;gap:8px;padding:40px 0 0;flex-wrap:wrap}
+.pagination button{min-width:38px;height:38px;padding:0 12px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;color:var(--text-dim);transition:all .2s}
+.pagination button:hover:not(:disabled){border-color:var(--border-strong);color:var(--text)}
+.pagination button.active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.pagination button:disabled{opacity:0.3;cursor:not-allowed}
+.pagination .dots{color:var(--text-mute);padding:0 4px}
 
 .empty{padding:64px 0;text-align:center;color:var(--text-mute);font-size:15px}
 
@@ -113,6 +125,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .form__note{font-size:12px;color:var(--text-mute);text-align:center;line-height:1.6}
 .form__status{font-size:13.5px;color:var(--accent);text-align:center;display:none;padding:16px;background:var(--accent-soft);border-radius:var(--radius);border:1px solid var(--accent-line)}
 .form__status.show{display:block}
+.form__status.error{color:#d88484;background:rgba(216,132,132,0.1);border-color:rgba(216,132,132,0.3)}
 
 .footer{padding:56px 0 40px;border-top:1px solid var(--border);background:var(--surface)}
 .footer__inner{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;margin-bottom:40px}
@@ -160,23 +173,30 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </span>
     </a>
     <nav class="nav">
-      <a href="/#services">Направления</a>
-      <a href="/#process">Процесс</a>
-      <a href="/#business">Для бизнеса</a>
-      <a href="/reviews.html" class="active">Отзывы</a>
-      <a href="/#contact">Контакты</a>
+      <a href="/#services" data-i18n="nav_services">Направления</a>
+      <a href="/#process" data-i18n="nav_process">Процесс</a>
+      <a href="/#business" data-i18n="nav_business">Для бизнеса</a>
+      <a href="/reviews" class="active" data-i18n="nav_reviews">Отзывы</a>
+      <a href="/#faq" data-i18n="nav_faq">Вопросы</a>
     </nav>
-    <a href="/#contact" class="header__cta">Оставить запрос</a>
-    <button class="burger" onclick="document.getElementById('mobileMenu').classList.toggle('open')" aria-label="Меню"><span></span></button>
+    <div class="header__right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="uk">UK</button>
+      </div>
+      <a href="/#contact" class="header__cta" data-i18n="header_cta">Оставить запрос</a>
+      <button class="burger" onclick="document.getElementById('mobileMenu').classList.toggle('open')" aria-label="Menu"><span></span></button>
+    </div>
   </div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="/#services" onclick="this.parentElement.classList.remove('open')">Направления</a>
-  <a href="/#process" onclick="this.parentElement.classList.remove('open')">Процесс</a>
-  <a href="/#business" onclick="this.parentElement.classList.remove('open')">Для бизнеса</a>
-  <a href="/reviews.html">Отзывы</a>
-  <a href="/#contact" onclick="this.parentElement.classList.remove('open')">Контакты</a>
+  <a href="/#services" data-i18n="nav_services">Направления</a>
+  <a href="/#process" data-i18n="nav_process">Процесс</a>
+  <a href="/#business" data-i18n="nav_business">Для бизнеса</a>
+  <a href="/reviews" data-i18n="nav_reviews">Отзывы</a>
+  <a href="/#faq" data-i18n="nav_faq">Вопросы</a>
+  <a href="/#contact" data-i18n="nav_contact">Контакты</a>
 </div>
 
 <main>
@@ -184,19 +204,19 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 <section class="hero">
   <div class="wrap hero__inner">
     <div>
-      <span class="eyebrow">Отзывы клиентов</span>
-      <h1>Что говорят те, кто уже работал с нами</h1>
-      <p>Мы не удаляем негативные отзывы и не редактируем их. Всё, что вы видите здесь — реальные истории клиентов, включая те, где что-то пошло не по плану.</p>
+      <span class="eyebrow" data-i18n="rv_eyebrow">Отзывы клиентов</span>
+      <h1 data-i18n="rv_title">Что говорят те, кто уже работал с нами</h1>
+      <p data-i18n="rv_lead">Мы не удаляем негативные отзывы и не редактируем их. Всё, что вы видите здесь — реальные истории клиентов, включая те, где что-то пошло не по плану.</p>
     </div>
-    <div class="summary" id="summary">
+    <div class="summary">
       <div class="summary__top">
         <div class="summary__score">
           <strong id="avgScore">—</strong>
-          <span>из 5</span>
+          <span data-i18n="rv_avg_label">из 5</span>
         </div>
         <div>
           <div class="summary__stars" id="avgStars">★★★★★</div>
-          <div class="summary__count">На основе <span id="totalCount">—</span> отзывов</div>
+          <div class="summary__count"><span data-i18n="rv_total_pre">На основе</span> <span id="totalCount">—</span> <span data-i18n="rv_total_post">отзывов</span></div>
         </div>
       </div>
       <div class="summary__bars" id="bars"></div>
@@ -206,47 +226,48 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 <div class="wrap">
   <div class="filters" id="filters">
-    <span class="filter-label">Фильтр</span>
-    <span class="chip active" data-filter="all">Все</span>
-    <span class="chip" data-filter="5">5 звёзд</span>
-    <span class="chip" data-filter="4">4 звезды</span>
-    <span class="chip" data-filter="3">3 звезды</span>
-    <span class="chip" data-filter="2">2 звезды</span>
-    <span class="chip" data-filter="with-reply">С ответом</span>
+    <span class="filter-label" data-i18n="rv_filter">Фильтр</span>
+    <span class="chip active" data-filter="all" data-i18n="rv_filter_all">Все</span>
+    <span class="chip" data-filter="5" data-i18n="rv_filter_5">5 звёзд</span>
+    <span class="chip" data-filter="4" data-i18n="rv_filter_4">4 звезды</span>
+    <span class="chip" data-filter="3" data-i18n="rv_filter_3">3 звезды</span>
+    <span class="chip" data-filter="2" data-i18n="rv_filter_2">2 звезды</span>
+    <span class="chip" data-filter="with-reply" data-i18n="rv_filter_reply">С ответом</span>
   </div>
 </div>
 
 <section class="reviews">
   <div class="wrap">
     <div class="reviews__list" id="reviewsList"></div>
-    <div class="empty" id="empty" style="display:none">По выбранному фильтру отзывов нет.</div>
+    <div class="empty" id="empty" style="display:none" data-i18n="rv_empty">По выбранному фильтру отзывов нет.</div>
+    <div class="pagination" id="pagination"></div>
   </div>
 </section>
 
 <section class="form-section" id="leave">
   <div class="wrap form-wrap">
-    <h2>Оставить отзыв</h2>
-    <p>Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
+    <h2 data-i18n="rv_form_title">Оставить отзыв</h2>
+    <p data-i18n="rv_form_text">Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
     <form class="form" id="reviewForm" onsubmit="submitReview(event)">
       <div class="row">
         <div class="field">
-          <label for="r-name">Имя или инициал *</label>
-          <input type="text" id="r-name" required maxlength="40" placeholder="Андрей или А.">
+          <label for="r-name" data-i18n="rv_form_name">Имя или инициал</label>
+          <input type="text" id="r-name" required maxlength="40" data-i18n-ph="rv_form_name_ph" placeholder="Андрей или А.">
         </div>
         <div class="field">
-          <label for="r-service">Направление *</label>
+          <label for="r-service" data-i18n="rv_form_service">Направление</label>
           <select id="r-service" required>
-            <option value="">Выберите</option>
-            <option>Восстановление доступа</option>
-            <option>Проверка информации</option>
-            <option>Аудит и защита</option>
-            <option>Для бизнеса</option>
-            <option>Другое</option>
+            <option value="" data-i18n-opt="form_topic_ph">Выберите</option>
+            <option value="Восстановление доступа" data-i18n-opt="form_topic_1">Восстановление доступа</option>
+            <option value="Проверка информации" data-i18n-opt="form_topic_2">Проверка информации</option>
+            <option value="Аудит и защита" data-i18n-opt="form_topic_3">Аудит и защита</option>
+            <option value="Для бизнеса" data-i18n-opt="form_topic_4">Для бизнеса</option>
+            <option value="Другое" data-i18n-opt="form_topic_5">Другое</option>
           </select>
         </div>
       </div>
       <div class="field">
-        <label>Оценка *</label>
+        <label data-i18n="rv_form_rating">Оценка</label>
         <div class="rating" id="ratingInput">
           <span class="rating__star" data-rating="1">★</span>
           <span class="rating__star" data-rating="2">★</span>
@@ -256,12 +277,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
         </div>
       </div>
       <div class="field">
-        <label for="r-text">Отзыв *</label>
-        <textarea id="r-text" required maxlength="900" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
+        <label for="r-text" data-i18n="rv_form_text_label">Отзыв</label>
+        <textarea id="r-text" required maxlength="900" data-i18n-ph="rv_form_text_ph" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
       </div>
-      <button type="submit" class="btn btn--primary">Отправить отзыв</button>
-      <p class="form__note">Отзыв публикуется после короткой проверки — обычно в течение нескольких часов. Мы не редактируем текст, только отсекаем спам.</p>
-      <div class="form__status" id="formStatus">Спасибо! Отзыв отправлен на проверку.</div>
+      <button type="submit" class="btn btn--primary" data-i18n="rv_form_submit">Отправить отзыв</button>
+      <p class="form__note" data-i18n="rv_form_note">Отзыв публикуется после короткой проверки — обычно в течение нескольких часов. Мы не редактируем текст, только отсекаем спам.</p>
+      <div class="form__status" id="formStatus" data-i18n="rv_form_status">Спасибо! Отзыв отправлен на проверку.</div>
     </form>
   </div>
 </section>
@@ -286,51 +307,67 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
             <span class="brand__sub">Digital Services</span>
           </span>
         </a>
-        <p>Конфиденциальные цифровые услуги для частных лиц и компаний. Работаем по договору, соблюдаем NDA.</p>
+        <p data-i18n="footer_desc">Конфиденциальные цифровые услуги для частных лиц и компаний. Работаем по договору, соблюдаем NDA.</p>
       </div>
       <div class="footer__cols">
         <div class="footer__col">
-          <h5>Разделы</h5>
-          <a href="/#services">Направления</a>
-          <a href="/#business">Для бизнеса</a>
-          <a href="/reviews.html">Отзывы</a>
+          <h5 data-i18n="footer_col_1">Разделы</h5>
+          <a href="/#services" data-i18n="nav_services">Направления</a>
+          <a href="/#business" data-i18n="nav_business">Для бизнеса</a>
+          <a href="/reviews" data-i18n="nav_reviews">Отзывы</a>
         </div>
         <div class="footer__col">
-          <h5>Связь</h5>
-          <a href="https://t.me/kopen005" target="_blank" rel="noopener">Telegram</a>
-          <a href="/#contact">Оставить запрос</a>
+          <h5 data-i18n="footer_col_2">Связь</h5>
+          <a href="https://t.me/kopen005" target="_blank" rel="noopener" data-i18n="contact_tg_label">Telegram</a>
+          <a href="/#contact" data-i18n="nav_contact">Контакты</a>
         </div>
       </div>
     </div>
     <div class="footer__bottom">
       <span>© <span id="year"></span> PHANTOM Digital Services.</span>
-      <span>Работаем конфиденциально. По договору и NDA.</span>
+      <span data-i18n="footer_note">Работаем конфиденциально. По договору и NDA.</span>
     </div>
   </div>
 </footer>
 
+<script src="/lang.js"></script>
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
 let allReviews = [];
 let summary = null;
 let currentFilter = 'all';
+let currentPage = 1;
+const PER_PAGE = 20;
+
+function lang(){
+  return (window.PhantomLang && window.PhantomLang.current()) || 'ru';
+}
+
+function t(key){
+  return (window.PhantomLang && window.PhantomLang.t && window.PhantomLang.t(key)) || key;
+}
 
 function formatDate(iso){
   const d = new Date(iso);
-  const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  const l = lang();
+  const months = l === 'uk'
+    ? ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня']
+    : ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 }
 
-function stars(n){ return '★'.repeat(n) + '☆'.repeat(5-n); }
+function stars(n){ return '★'.repeat(n) + '☆'.repeat(5 - n); }
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
 function renderSummary(){
   if(!summary) return;
   document.getElementById('avgScore').textContent = summary.rating.toFixed(1);
   document.getElementById('totalCount').textContent = summary.total;
-  const starCount = Math.round(summary.rating);
-  document.getElementById('avgStars').textContent = stars(starCount);
-  
+  document.getElementById('avgStars').textContent = stars(Math.round(summary.rating));
   const bars = document.getElementById('bars');
   bars.innerHTML = '';
   for(let i = 5; i >= 1; i--){
@@ -345,52 +382,79 @@ function renderSummary(){
   }
 }
 
+function getFiltered(){
+  if(currentFilter === 'with-reply') return allReviews.filter(r => r.reply_ru || r.reply_uk);
+  if(currentFilter !== 'all') return allReviews.filter(r => String(r.rating) === currentFilter);
+  return allReviews;
+}
+
 function renderReviews(){
   const list = document.getElementById('reviewsList');
   const empty = document.getElementById('empty');
+  const pag = document.getElementById('pagination');
   list.innerHTML = '';
-  
-  let filtered = allReviews;
-  if(currentFilter === 'with-reply'){
-    filtered = allReviews.filter(r => r.reply);
-  } else if(currentFilter !== 'all'){
-    filtered = allReviews.filter(r => String(r.rating) === currentFilter);
-  }
-  
+  pag.innerHTML = '';
+
+  const filtered = getFiltered();
   if(filtered.length === 0){
     empty.style.display = 'block';
     return;
   }
   empty.style.display = 'none';
-  
-  filtered.forEach(r => {
+
+  const totalPages = Math.ceil(filtered.length / PER_PAGE);
+  if(currentPage > totalPages) currentPage = 1;
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageItems = filtered.slice(start, start + PER_PAGE);
+
+  const l = lang();
+  pageItems.forEach(r => {
+    const name = l === 'uk' ? r.name_uk : r.name_ru;
+    const service = l === 'uk' ? r.service_uk : r.service_ru;
+    const text = l === 'uk' ? r.text_uk : r.text_ru;
+    const reply = l === 'uk' ? r.reply_uk : r.reply_ru;
     const el = document.createElement('article');
     el.className = 'review';
-    let replyHTML = '';
-    if(r.reply){
-      replyHTML = '<div class="review__reply">' +
-        '<div class="review__reply-head">Ответ PHANTOM</div>' +
-        '<div class="review__reply-text">' + escapeHTML(r.reply) + '</div>' +
+    let replyHtml = '';
+    if(reply){
+      replyHtml = '<div class="review__reply">' +
+        '<div class="review__reply-head">' + t('rv_reply_label') + '</div>' +
+        '<div class="review__reply-text">' + escapeHtml(reply) + '</div>' +
       '</div>';
     }
     el.innerHTML =
       '<div class="review__head">' +
-        '<div class="review__avatar">' + escapeHTML(r.initial) + '</div>' +
+        '<div class="review__avatar">' + escapeHtml(r.initial || '?') + '</div>' +
         '<div class="review__meta">' +
-          '<div class="review__name">' + escapeHTML(r.name) + '</div>' +
-          '<div class="review__service">' + escapeHTML(r.service) + '</div>' +
+          '<div class="review__name">' + escapeHtml(name) + '</div>' +
+          '<div class="review__service">' + escapeHtml(service) + '</div>' +
         '</div>' +
         '<div class="review__date">' + formatDate(r.date) + '</div>' +
       '</div>' +
       '<div class="review__stars">' + stars(r.rating) + '</div>' +
-      '<p class="review__text">' + escapeHTML(r.text) + '</p>' +
-      replyHTML;
+      '<p class="review__text">' + escapeHtml(text) + '</p>' +
+      replyHtml;
     list.appendChild(el);
   });
-}
 
-function escapeHTML(s){
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  // Пагинация
+  if(totalPages > 1){
+    const addBtn = (label, page, disabled, active) => {
+      const b = document.createElement('button');
+      b.textContent = label;
+      if(disabled) b.disabled = true;
+      if(active) b.classList.add('active');
+      b.onclick = () => { currentPage = page; renderReviews(); window.scrollTo({top: 300, behavior:'smooth'}); };
+      pag.appendChild(b);
+    };
+    addBtn('‹', currentPage - 1, currentPage === 1, false);
+    let from = Math.max(1, currentPage - 2);
+    let to = Math.min(totalPages, currentPage + 2);
+    if(from > 1){ addBtn('1', 1, false, currentPage === 1); if(from > 2) pag.insertAdjacentHTML('beforeend', '<span class="dots">…</span>'); }
+    for(let i = from; i <= to; i++) addBtn(String(i), i, false, i === currentPage);
+    if(to < totalPages){ if(to < totalPages - 1) pag.insertAdjacentHTML('beforeend', '<span class="dots">…</span>'); addBtn(String(totalPages), totalPages, false, currentPage === totalPages); }
+    addBtn('›', currentPage + 1, currentPage === totalPages, false);
+  }
 }
 
 document.getElementById('filters').addEventListener('click', e => {
@@ -398,6 +462,7 @@ document.getElementById('filters').addEventListener('click', e => {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   e.target.classList.add('active');
   currentFilter = e.target.dataset.filter;
+  currentPage = 1;
   renderReviews();
 });
 
@@ -424,46 +489,69 @@ document.getElementById('ratingInput').addEventListener('mouseleave', () => {
 
 async function submitReview(e){
   e.preventDefault();
-  if(selectedRating === 0){ alert('Поставьте оценку'); return; }
-  
-  const data = {
+  const status = document.getElementById('formStatus');
+  status.classList.remove('show', 'error');
+
+  if(selectedRating === 0){
+    status.textContent = lang() === 'uk' ? 'Поставте оцінку' : 'Поставьте оценку';
+    status.classList.add('show', 'error');
+    return;
+  }
+
+  const payload = {
     name: document.getElementById('r-name').value.trim(),
     service: document.getElementById('r-service').value,
     rating: selectedRating,
-    text: document.getElementById('r-text').value.trim(),
-    date: new Date().toISOString().split('T')[0]
+    text: document.getElementById('r-text').value.trim()
   };
-  
-  // Здесь — отправка на бэкенд или в Telegram-бот (см. инструкцию ниже).
-  // Пока просто показываем статус.
-  document.getElementById('formStatus').classList.add('show');
-  e.target.reset();
-  selectedRating = 0;
-  document.querySelectorAll('.rating__star').forEach(s => s.classList.remove('active'));
-  
-  // Заготовка под реальную отправку:
-  // await fetch('https://api.telegram.org/bot<TOKEN>/sendMessage', {
-  //   method:'POST', headers:{'Content-Type':'application/json'},
-  //   body: JSON.stringify({chat_id:'<CHAT_ID>', text: JSON.stringify(data, null, 2)})
-  // });
+
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+
+  try {
+    const res = await fetch('/api/submit-review', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    if(res.ok){
+      status.textContent = t('rv_form_status');
+      status.classList.add('show');
+      e.target.reset();
+      selectedRating = 0;
+      document.querySelectorAll('.rating__star').forEach(s => s.classList.remove('active'));
+    } else {
+      const err = await res.json().catch(() => ({}));
+      status.textContent = err.error || t('rv_form_error');
+      status.classList.add('show', 'error');
+    }
+  } catch(err) {
+    status.textContent = t('rv_form_error');
+    status.classList.add('show', 'error');
+  } finally {
+    submitBtn.disabled = false;
+  }
 }
 
 async function loadReviews(){
-  try{
-    const res = await fetch('reviews.json?v=' + Date.now());
+  try {
+    const res = await fetch('/reviews.json?v=' + Date.now());
     const data = await res.json();
-    allReviews = data.reviews;
-    summary = data.summary;
+    allReviews = data.reviews || [];
+    summary = data.summary || null;
     renderSummary();
     renderReviews();
   } catch(err){
-    console.error('Не удалось загрузить reviews.json', err);
     document.getElementById('reviewsList').innerHTML = '<div class="empty">Отзывы временно недоступны.</div>';
   }
 }
 
+document.addEventListener('langchange', () => {
+  renderSummary();
+  renderReviews();
+});
+
 loadReviews();
 </script>
-
 </body>
 </html>
