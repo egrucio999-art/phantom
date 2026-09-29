@@ -1,1 +1,27 @@
-.vercel
+# Секреты
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Vercel
+.vercel/
+.vercel_bak/
+
+# Локальные временные
+reviews_seed.json
+queue_backup.json
+*.bak
+*.log
+
+# Редакторы
+.vscode/
+.idea/
+*.swp
+.DS_Store

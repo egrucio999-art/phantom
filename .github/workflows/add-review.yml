@@ -1,0 +1,41 @@
+name: Add daily review
+
+on:
+  schedule:
+    # вторник, четверг, суббота — 3 раза в неделю
+    # время в UTC, разное для каждого дня, чтобы выглядело естественно
+    - cron: '17 9 * * 2'    # вторник 09:17 UTC
+    - cron: '43 14 * * 4'   # четверг 14:43 UTC
+    - cron: '8 20 * * 6'    # суббота 20:08 UTC
+  workflow_dispatch:  # ручной запуск
+
+jobs:
+  add-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Add review from queue
+        run: python3 scripts/add_review.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "phantom-admin"
+          git config user.email "admin@phantom-services.local"
+          if git diff --quiet reviews.json queue.json; then
+            echo "Нет изменений — пропускаем коммит"
+            exit 0
+          fi
+          git add reviews.json queue.json
+          git commit -m "reviews: auto-update"
+          git push
