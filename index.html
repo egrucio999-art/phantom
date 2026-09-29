@@ -574,6 +574,13 @@ function renderPreviewReviews(){
       if(total) total.textContent = s.total;
       if(stars) stars.textContent = '★'.repeat(Math.round(s.rating)) + '☆'.repeat(5 - Math.round(s.rating));
 
+      // Обновляем заголовок с живыми цифрами
+      const titleEl = document.querySelector('[data-i18n="prev_title"]');
+      if(titleEl && window.PhantomLang && window.PhantomLang.t){
+        const template = window.PhantomLang.t('prev_title');
+        titleEl.textContent = template.replace('{rating}', s.rating.toFixed(1)).replace('{total}', s.total);
+      }
+
       const grid = document.getElementById('rpGrid');
       if(!grid) return;
       // топ-3: с ответом + 5 звёзд
