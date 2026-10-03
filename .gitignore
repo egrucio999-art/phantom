@@ -28,3 +28,5 @@ queue_backup.json
 
 # Локальная очередь отзывов — НЕ в Git
 queue.json
+.vercel
+.env*
