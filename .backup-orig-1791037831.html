@@ -695,30 +695,25 @@ function submitForm(e){
 
 // Отзывы-превью на главной
 function pickReviewText(r, l) {
-  var orig = r.lang_original || 'ru';
-  if (orig === 'uk') {
-    return { text: r.text_uk || '', note: 'Оригінал: українською', lang: 'uk' };
+  if (l === 'uk') {
+    if (r.text_uk) return { text: r.text_uk, note: r.translated_uk ? 'Машинний переклад' : null };
+    if (r.text_ru) return { text: r.text_ru, note: 'Оригінал: російською' };
+    return { text: r.text_en || '', note: r.text_en ? 'Оригінал: англійською' : null };
   }
-  if (orig === 'en') {
-    return { text: r.text_en || r.text_ru || '', note: 'Original: English', lang: 'en' };
-  }
-  return { text: r.text_ru || '', note: 'Оригинал: русский', lang: 'ru' };
+  if (r.text_ru) return { text: r.text_ru, note: r.translated_ru ? 'Машинный перевод' : null };
+  if (r.text_uk) return { text: r.text_uk, note: 'Оригінал: українською' };
+  return { text: r.text_en || '', note: r.text_en ? 'Оригинал: английский' : null };
 }
 
 function pickReviewName(r, l) {
-  var orig = r.lang_original || 'ru';
-  if (orig === 'uk') return r.name_uk || r.name_ru || r.name_en || 'Клієнт';
-  if (orig === 'en') return r.name_en || r.name_ru || r.name_uk || 'Client';
+  if (l === 'uk') return r.name_uk || r.name_ru || r.name_en || 'Клієнт';
   return r.name_ru || r.name_uk || r.name_en || 'Клиент';
 }
 
 function pickReviewService(r, l) {
-  var orig = r.lang_original || 'ru';
-  if (orig === 'uk') return r.service_uk || r.service_ru || '';
-  if (orig === 'en') return r.service_en || r.service_ru || '';
-  return r.service_ru || r.service_uk || '';
+  if (l === 'uk') return r.service_uk || r.service_ru || r.service_en || '';
+  return r.service_ru || r.service_uk || r.service_en || '';
 }
-
 
 function renderPreviewReviews(){
   const lang = (window.PhantomLang && window.PhantomLang.current()) || 'ru';
