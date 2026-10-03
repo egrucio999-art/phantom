@@ -371,7 +371,7 @@ function renderSummary(){
   const bars = document.getElementById('bars');
   bars.innerHTML = '';
   for(let i = 5; i >= 1; i--){
-    const count = summary.distribution[i] || 0;
+    const count = summary.distribution[String(i)] || 0;
     const pct = summary.total > 0 ? (count / summary.total) * 100 : 0;
     const bar = document.createElement('div');
     bar.className = 'bar';
