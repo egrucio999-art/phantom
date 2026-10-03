@@ -25,3 +25,6 @@ queue_backup.json
 .idea/
 *.swp
 .DS_Store
+
+# Локальная очередь отзывов — НЕ в Git
+queue.json

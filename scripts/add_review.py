@@ -1,111 +1,79 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Автодобавление отзыва из очереди.
-Логика:
-  - По умолчанию добавляет 0, 1 или 2 отзыва (взвешенно: 25% — 0, 50% — 1, 25% — 2)
-  - С вероятностью 3% — 3 отзыва (пачка)
-  - С вероятностью 5% — пропуск (ничего не добавляет)
-  - Первый отзыв из очереди получает сегодняшнюю дату
-  - Остальные (если пачка) — сегодня минус 1-3 дня
-  - Пересчитывает summary
+Добавляет один отзыв из queue.json в reviews.json.
+Запускается вручную или через cron.
 """
-import json, random, sys, os
-from datetime import datetime, timedelta, timezone
+import json
+import os
+import random
+from datetime import datetime, timezone
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REVIEWS_PATH = os.path.join(BASE, "reviews.json")
-QUEUE_PATH = os.path.join(BASE, "queue.json")
-
-random.seed()
 
 
-def load_json(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def save_json(path, data):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
-
-def compute_summary(reviews):
+def summary(reviews):
     total = len(reviews)
-    dist = {5: 0, 4: 0, 3: 0, 2: 0, 1: 0}
-    s = 0
+    if total == 0:
+        return {"rating": 0, "total": 0, "distribution": {}}
+    s = sum(r["rating"] for r in reviews)
+    dist = {5:0,4:0,3:0,2:0,1:0}
     for r in reviews:
         dist[r["rating"]] += 1
-        s += r["rating"]
+    rating = round(s / total + random.uniform(-0.03, 0.03), 2)
+    rating = max(1.0, min(5.0, rating))
     return {
-        "rating": round(s / total, 1) if total else 0,
+        "rating": rating,
         "total": total,
         "distribution": {str(k): v for k, v in dist.items()}
     }
 
 
 def main():
-    data = load_json(REVIEWS_PATH)
-    queue = load_json(QUEUE_PATH)
+    rp = os.path.join(BASE, "reviews.json")
+    qp = os.path.join(BASE, "queue.json")
+
+    if not os.path.exists(qp):
+        print("queue.json не найден. Запусти generate_reviews.py")
+        return
+
+    with open(rp, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    with open(qp, "r", encoding="utf-8") as f:
+        queue = json.load(f)
 
     if not queue:
-        print("Очередь пуста. Ничего не добавляем.")
-        return 0
+        print("Очередь пуста.")
+        return
 
-    # Решаем, сколько добавить
-    roll = random.random()
-    if roll < 0.05:
-        print("Сегодня пропуск — отзывов не добавляем.")
-        return 0
-    elif roll < 0.30:
-        count = 0
-        print("Сегодня без новых отзывов (рандом).")
-        return 0
-    elif roll < 0.80:
-        count = 1
-    elif roll < 0.97:
-        count = 2
-    else:
-        count = 3
+    # Берём 1 отзыв, но иногда 0 или 2 (для реалистичности)
+    n = random.choices([0, 1, 2], weights=[10, 75, 15], k=1)[0]
+    if n == 0:
+        print("Сегодня без нового отзыва (реалистичная пауза).")
+        return
 
-    count = min(count, len(queue))
-    if count == 0:
-        print("Нечего добавлять.")
-        return 0
+    new = queue[:n]
+    queue = queue[n:]
 
-    added = []
-    now = datetime.now(timezone.utc)
+    # Обновляем дату на сегодня
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    for r in new:
+        r["date"] = today
 
-    for i in range(count):
-        review = queue.pop(0)
-        # Первый — сегодня, остальные с откатом
-        delta_days = 0 if i == 0 else random.randint(1, 3)
-        d = now - timedelta(days=delta_days)
-        d = d.replace(
-            hour=random.randint(8, 22),
-            minute=random.randint(0, 59),
-            second=random.randint(0, 59),
-            microsecond=0
-        )
-        review["date"] = d.strftime("%Y-%m-%d")
-        added.append(review)
+    # Добавляем в reviews
+    data["reviews"] = new + data["reviews"]
+    # Ограничиваем 200
+    data["reviews"] = data["reviews"][:200]
+    data["summary"] = summary(data["reviews"])
 
-    # Вставляем в начало (свежие сверху), потом пересортируем по дате
-    data["reviews"] = added + data["reviews"]
-    data["reviews"].sort(key=lambda r: r["date"], reverse=True)
-    data["summary"] = compute_summary(data["reviews"])
+    with open(rp, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    with open(qp, "w", encoding="utf-8") as f:
+        json.dump(queue, f, ensure_ascii=False, indent=2)
 
-    save_json(REVIEWS_PATH, data)
-    save_json(QUEUE_PATH, queue)
-
-    print(f"Добавлено отзывов: {count}")
-    for r in added:
-        print(f"  • {r['name_ru']} — {r['rating']}★ — {r['date']}")
-    print(f"Осталось в очереди: {len(queue)}")
-    print(f"Всего отзывов: {data['summary']['total']}, средний рейтинг: {data['summary']['rating']}")
-
-    return count
+    print(f"Добавлено: {len(new)}. Осталось в очереди: {len(queue)}")
 
 
 if __name__ == "__main__":
-    sys.exit(0 if main() >= 0 else 1)
+    main()
