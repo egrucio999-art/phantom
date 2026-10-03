@@ -90,7 +90,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .review__date{font-size:12.5px;color:var(--text-mute);flex-shrink:0}
 .review__stars{color:var(--accent);font-size:14px;letter-spacing:1px;margin-bottom:12px}
 .review__text{font-size:15px;color:var(--text);line-height:1.7;max-width:820px}
-.review__note{font-size:12px;color:var(--text-mute);font-style:italic;margin-top:6px}
 .review__reply{margin-top:20px;margin-left:62px;padding:18px 22px;background:var(--surface);border-left:2px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;max-width:760px}
 .review__reply-head{font-size:12px;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
 .review__reply-text{font-size:14px;color:var(--text-dim);line-height:1.65}
@@ -341,27 +340,6 @@ let currentFilter = 'all';
 let currentPage = 1;
 const PER_PAGE = 20;
 
-function pickReviewText(r, l) {
-  if (l === 'uk') {
-    if (r.text_uk) return { text: r.text_uk, note: r.translated_uk ? 'Машинний переклад' : null };
-    if (r.text_ru) return { text: r.text_ru, note: 'Оригінал: російською' };
-    return { text: r.text_en || '', note: r.text_en ? 'Оригінал: англійською' : null };
-  }
-  if (r.text_ru) return { text: r.text_ru, note: r.translated_ru ? 'Машинный перевод' : null };
-  if (r.text_uk) return { text: r.text_uk, note: 'Оригінал: українською' };
-  return { text: r.text_en || '', note: r.text_en ? 'Оригинал: английский' : null };
-}
-
-function pickReviewName(r, l) {
-  if (l === 'uk') return r.name_uk || r.name_ru || r.name_en || 'Клієнт';
-  return r.name_ru || r.name_uk || r.name_en || 'Клиент';
-}
-
-function pickReviewService(r, l) {
-  if (l === 'uk') return r.service_uk || r.service_ru || r.service_en || '';
-  return r.service_ru || r.service_uk || r.service_en || '';
-}
-
 function lang(){
   return (window.PhantomLang && window.PhantomLang.current()) || 'ru';
 }
@@ -431,9 +409,9 @@ function renderReviews(){
 
   const l = lang();
   pageItems.forEach(r => {
-    const name = pickReviewName(r, l);
-    const service = pickReviewService(r, l);
-    const { text, note } = pickReviewText(r, l);
+    const name = l === 'uk' ? r.name_uk : r.name_ru;
+    const service = l === 'uk' ? r.service_uk : r.service_ru;
+    const text = l === 'uk' ? r.text_uk : r.text_ru;
     const reply = l === 'uk' ? r.reply_uk : r.reply_ru;
     const el = document.createElement('article');
     el.className = 'review';
@@ -455,7 +433,6 @@ function renderReviews(){
       '</div>' +
       '<div class="review__stars">' + stars(r.rating) + '</div>' +
       '<p class="review__text">' + escapeHtml(text) + '</p>' +
-      (note ? '<div class="review__note">' + escapeHtml(note) + '</div>' : '') +
       replyHtml;
     list.appendChild(el);
   });
