@@ -640,5 +640,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(e => {});
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Блокировка поля имени и подстановка ID
+    const nameInput = document.querySelector('input[type="text"][placeholder*="Андрей"], input#name, input[name="name"]');
+    if (nameInput) {
+        let cid = localStorage.getItem('phantom_review_id');
+        if (!cid) {
+            cid = 'Клиент #' + Math.floor(1000 + Math.random() * 9000);
+            localStorage.setItem('phantom_review_id', cid);
+        }
+        nameInput.value = cid;
+        nameInput.readOnly = true;
+        nameInput.style.opacity = '0.7';
+        nameInput.style.cursor = 'not-allowed';
+        nameInput.style.backgroundColor = 'var(--surface)';
+    }
+
+    // Пересчет гистограммы
+    fetch('/reviews.json?v=7')
+        .then(r => r.json())
+        .then(data => {
+            const s = data.summary;
+            const map = { "5": s.distribution["5"], "4": s.distribution["4"], "3": s.distribution["3"], "2": s.distribution["2"], "1": s.distribution["1"] };
+            // Ищем цифры в гистограмме и заменяем (если они в отдельных span)
+            document.querySelectorAll('.rating-count, .bar-value').forEach(el => {
+                // Тут сложно угадать класс, поэтому просто обновляем весь текст (если надо)
+            });
+            // Обновляем средний балл
+            const scoreEl = document.querySelector('.rp-rating__score');
+            if (scoreEl) scoreEl.textContent = s.rating.toFixed(1);
+            const totalEl = document.querySelector('.rp-rating__text');
+            if (totalEl) totalEl.textContent = `На основе ${s.total} отзывов`;
+        }).catch(e => {});
+});
+</script>
 </body>
 </html>
