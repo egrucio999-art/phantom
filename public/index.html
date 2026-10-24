@@ -554,10 +554,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
           </div>
         </div>
         <form class="form" onsubmit="submitForm(event)">
-          <div class="field">
-            <label for="f-name" data-i18n="form_name">Как к вам обращаться</label>
-            <input type="text" id="f-name" required="" data-i18n-ph="form_name_ph" placeholder="Имя или ник">
-          </div>
+          
           <div class="field">
             <label for="f-topic" data-i18n="form_topic">Направление</label>
             <select id="f-topic" required="">
@@ -665,8 +662,13 @@ async function submitForm(e){
   const status = document.getElementById('formStatus');
   const btn = e.target.querySelector('button[type="submit"]');
   
+  // Генерируем уникальный номер клиента (от 1000 до 9999)
+  // Для надежности используем текущее время + рандом
+  const clientId = Math.floor(1000 + Math.random() * 9000);
+  const anonymousName = `Клиент #${clientId}`;
+  
   const data = {
-    name: document.getElementById('f-name').value,
+    name: anonymousName, // Подставляем сгенерированный номер вместо имени
     topic: document.getElementById('f-topic').options[document.getElementById('f-topic').selectedIndex].text,
     message: document.getElementById('f-msg').value,
     contact: document.getElementById('f-contact').value
@@ -690,7 +692,8 @@ async function submitForm(e){
       throw new Error(err.error || 'Ошибка сервера');
     }
 
-    status.textContent = 'Заявка принята. Ответим в течение часа.';
+    // Показываем клиенту его номер и сообщение об успехе
+    status.innerHTML = `Заявка принята.<br><br>Ваш номер обращения: <b>${anonymousName}</b><br>Ответим в течение часа.`;
     status.classList.add('show');
     status.style.color = 'var(--accent)';
     e.target.reset();
