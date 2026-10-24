@@ -1,22 +1,16 @@
-"""
-Vercel Python Function: приём заявок → Telegram.
-Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
-"""
 import os
 import json
 import urllib.request
 import urllib.error
 from http.server import BaseHTTPRequestHandler
 
-BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
-
+BOT_TOKEN = "8292620250:AAEXFdOBdDHjbeEvFEXHtvxgw7i60CBTOKk"
+CHAT_ID = "8438889071"
 
 def esc(s):
     for ch in "_*[]()~`>#+-=|{}.!":
         s = s.replace(ch, "\\" + ch)
     return s
-
 
 def send_tg(name, topic, message, contact):
     if not BOT_TOKEN or not CHAT_ID:
@@ -42,7 +36,6 @@ def send_tg(name, topic, message, contact):
     except Exception as e:
         return False, str(e)
 
-
 def validate(body):
     name = str(body.get("name", "")).strip()[:100]
     topic = str(body.get("topic", "")).strip()[:100]
@@ -53,7 +46,6 @@ def validate(body):
     if len(message) < 10: return False, "Сообщение слишком короткое", None
     if len(contact) < 3: return False, "Контакт слишком короткий", None
     return True, None, {"name": name, "topic": topic, "message": message, "contact": contact}
-
 
 class handler(BaseHTTPRequestHandler):
     def _send(self, code, payload):
