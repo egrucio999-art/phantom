@@ -582,5 +582,24 @@ document.addEventListener('langchange', () => {
 
 loadReviews();
 </script>
-</body>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/reviews.json?v=4')
+            .then(r => r.json())
+            .then(data => {
+                const s = data.summary;
+                // Ищем все элементы с цифрами в гистограмме (они обычно лежат в правой колонке)
+                const rows = document.querySelectorAll('.rating-row');
+                if(rows.length >= 5) {
+                    rows[0].querySelector('.rating-count').textContent = s.distribution['5'];
+                    rows[1].querySelector('.rating-count').textContent = s.distribution['4'];
+                    rows[2].querySelector('.rating-count').textContent = s.distribution['3'];
+                    rows[3].querySelector('.rating-count').textContent = s.distribution['2'];
+                    rows[4].querySelector('.rating-count').textContent = s.distribution['1'];
+                }
+            }).catch(e => console.log(e));
+    });
+    </script>
+    </body>
 </html>
