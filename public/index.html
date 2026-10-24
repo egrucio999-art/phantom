@@ -657,18 +657,26 @@ function toggleFaq(btn){
   if(!wasOpen) item.classList.add('open');
 }
 
+function getOrCreateClientId() {
+    let id = localStorage.getItem('phantom_client_id');
+    if (!id) {
+        id = Math.floor(1000 + Math.random() * 9000);
+        localStorage.setItem('phantom_client_id', id);
+    }
+    return id;
+}
+
 async function submitForm(e){
   e.preventDefault();
   const status = document.getElementById('formStatus');
   const btn = e.target.querySelector('button[type="submit"]');
   
-  // Генерируем уникальный номер клиента (от 1000 до 9999)
-  // Для надежности используем текущее время + рандом
-  const clientId = Math.floor(1000 + Math.random() * 9000);
+  // Берем сохраненный номер или создаем новый
+  const clientId = getOrCreateClientId();
   const anonymousName = `Клиент #${clientId}`;
   
   const data = {
-    name: anonymousName, // Подставляем сгенерированный номер вместо имени
+    name: anonymousName,
     topic: document.getElementById('f-topic').options[document.getElementById('f-topic').selectedIndex].text,
     message: document.getElementById('f-msg').value,
     contact: document.getElementById('f-contact').value
@@ -692,8 +700,7 @@ async function submitForm(e){
       throw new Error(err.error || 'Ошибка сервера');
     }
 
-    // Показываем клиенту его номер и сообщение об успехе
-    status.innerHTML = `Заявка принята.<br><br>Ваш номер обращения: <b>${anonymousName}</b><br>Ответим в течение часа.`;
+    status.innerHTML = `Заявка принята.<br><br>Ваш номер обращения: <b>${anonymousName}</b><br>Сохраните его. Ответим в течение часа.`;
     status.classList.add('show');
     status.style.color = 'var(--accent)';
     e.target.reset();
