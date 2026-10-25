@@ -242,44 +242,42 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   <div class="wrap form-wrap">
     <h2 data-i18n="rv_form_title">Оставить отзыв</h2>
     <p data-i18n="rv_form_text">Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
-    <form class="form" id="reviewForm" onsubmit="submitReview(event)">
-      <div class="row">
-        
-        <div class="field">
-          <label for="r-service" data-i18n="rv_form_service">Направление</label>
-          <select id="r-service" required>
-            <option value="" data-i18n-opt="form_topic_ph">Выберите</option>
-            <option value="Восстановление доступа" data-i18n-opt="form_topic_1">Восстановление доступа</option>
-            <option value="Проверка информации" data-i18n-opt="form_topic_2">Проверка информации</option>
-            <option value="Аудит и защита" data-i18n-opt="form_topic_3">Аудит и защита</option>
-            <option value="Для бизнеса" data-i18n-opt="form_topic_4">Для бизнеса</option>
-            <option value="Другое" data-i18n-opt="form_topic_5">Другое</option>
-          </select>
+    
+<form id="reviewForm" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: left;">
+    <div class="field">
+        <label>Направление</label>
+        <select id="rev-service" required style="width:100%; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text);">
+            <option value="Восстановление доступа">Восстановление доступа</option>
+            <option value="Проверка информации">Проверка информации</option>
+            <option value="Аудит и защита">Аудит и защита</option>
+            <option value="Для бизнеса">Для бизнеса</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>Оценка</label>
+        <div id="starRating" style="display:flex; gap:8px; font-size:28px; cursor:pointer; user-select:none;">
+            <span class="star" data-val="1" style="color:var(--text-mute);">★</span>
+            <span class="star" data-val="2" style="color:var(--text-mute);">★</span>
+            <span class="star" data-val="3" style="color:var(--text-mute);">★</span>
+            <span class="star" data-val="4" style="color:var(--text-mute);">★</span>
+            <span class="star" data-val="5" style="color:var(--text-mute);">★</span>
         </div>
-      </div>
-      <div class="field">
-        <label data-i18n="rv_form_rating">Оценка</label>
-        <div class="rating" id="ratingInput">
-          <span class="rating__star" data-rating="1">★</span>
-          <span class="rating__star" data-rating="2">★</span>
-          <span class="rating__star" data-rating="3">★</span>
-          <span class="rating__star" data-rating="4">★</span>
-          <span class="rating__star" data-rating="5">★</span>
-        </div>
-      </div>
-      <div class="field">
-        <label for="r-text" data-i18n="rv_form_text_label">Отзыв</label>
-        
-<div class="field">
-    <label>Ваш идентификатор</label>
-    <input type="text" id="client-id-display" value="Загрузка..." readonly style="padding:13px 15px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-mute);font-size:15px;cursor:not-allowed;">
-</div>
-<textarea id="r-text" required maxlength="900" data-i18n-ph="rv_form_text_ph" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
-      </div>
-      <button type="submit" class="btn btn--primary" data-i18n="rv_form_submit">Отправить отзыв</button>
-      <p class="form__note" data-i18n="rv_form_note">Отзыв публикуется после короткой проверки — обычно в течение нескольких часов. Мы не редактируем текст, только отсекаем спам.</p>
-      <div class="form__status" id="formStatus" data-i18n="rv_form_status">Спасибо! Отзыв отправлен на проверку.</div>
-    </form>
+    </div>
+
+    <div class="field">
+        <label>Отзыв</label>
+        <textarea id="rev-text" required placeholder="Что делали, что получилось, что можно было лучше" style="width:100%; min-height:120px; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:inherit; resize:vertical;"></textarea>
+    </div>
+
+    <div class="field">
+        <label>Ваш идентификатор</label>
+        <input type="text" id="rev-client-id" readonly value="Загрузка..." style="width:100%; padding:12px; background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--text-mute); cursor:not-allowed;">
+    </div>
+
+    <button type="submit" id="rev-submit" class="btn btn--primary btn--full" style="margin-top:10px;">Отправить отзыв</button>
+</form>
+
   </div>
 </section>
 
@@ -838,6 +836,89 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Получаем ID
+    try {
+        const res = await fetch('/api/get-client-id');
+        const data = await res.json();
+        document.getElementById('rev-client-id').value = data.name || ('Клиент #' + Math.floor(1000 + Math.random() * 9000));
+    } catch (e) {
+        document.getElementById('rev-client-id').value = 'Клиент #' + Math.floor(1000 + Math.random() * 9000);
+    }
+
+    // 2. Логика звезд
+    const stars = document.querySelectorAll('.star');
+    let rating = 0;
+    
+    stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            const val = parseInt(star.dataset.val);
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.val) <= val ? 'var(--accent)' : 'var(--text-mute)';
+            });
+        });
+        
+        star.addEventListener('mouseout', () => {
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.val) <= rating ? 'var(--accent)' : 'var(--text-mute)';
+            });
+        });
+        
+        star.addEventListener('click', () => {
+            rating = parseInt(star.dataset.val);
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.val) <= rating ? 'var(--accent)' : 'var(--text-mute)';
+            });
+        });
+    });
+
+    // 3. Отправка
+    document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (rating === 0) return alert('Поставьте оценку!');
+        
+        const text = document.getElementById('rev-text').value;
+        if (text.length < 10) return alert('Отзыв слишком короткий (минимум 10 символов).');
+        
+        const service = document.getElementById('rev-service').value;
+        const clientId = document.getElementById('rev-client-id').value;
+        const btn = document.getElementById('rev-submit');
+        
+        btn.textContent = 'Отправка...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/api/submit-review', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    name: clientId,
+                    service: service,
+                    rating: rating,
+                    text: text
+                })
+            });
+
+            if(res.ok) {
+                alert('Спасибо! Отзыв отправлен на модерацию.');
+                e.target.reset();
+                rating = 0;
+                stars.forEach(s => s.style.color = 'var(--text-mute)');
+            } else {
+                alert('Ошибка сервера при отправке.');
+            }
+        } catch(err) {
+            alert('Ошибка сети.');
+        } finally {
+            btn.textContent = 'Отправить отзыв';
+            btn.disabled = false;
+        }
+    });
 });
 </script>
 </body>
