@@ -721,16 +721,16 @@ function pickReviewText(r, l) {
     return { text: r.text_uk || '', note: 'Оригінал: українською', lang: 'uk' };
   }
   if (orig === 'en') {
-    return { text: r.text_en || r.text_ru || '', note: 'Original: English', lang: 'en' };
+    
   }
   return { text: r.text_ru || '', note: 'Оригинал: русский', lang: 'ru' };
 }
 
 function pickReviewName(r, l) {
   var orig = r.lang_original || 'ru';
-  if (orig === 'uk') return r.name_uk || r.name_ru || r.name_en || 'Клієнт';
+  if (orig === 'uk') return r.name_uk || r.name_ru || 'Клієнт';
   if (orig === 'en') return r.name_en || r.name_ru || r.name_uk || 'Client';
-  return r.name_ru || r.name_uk || r.name_en || 'Клиент';
+  return r.name_ru || r.name_uk || 'Клиент';
 }
 
 function pickReviewService(r, l) {
