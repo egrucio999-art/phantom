@@ -244,10 +244,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <p data-i18n="rv_form_text">Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
     <form class="form" id="reviewForm" onsubmit="submitReview(event)">
       <div class="row">
-        <div class="field">
-          <label for="r-name" data-i18n="rv_form_name">Имя или инициал</label>
-          <input type="text" id="r-name" required maxlength="40" data-i18n-ph="rv_form_name_ph" placeholder="Андрей или А.">
-        </div>
+        
         <div class="field">
           <label for="r-service" data-i18n="rv_form_service">Направление</label>
           <select id="r-service" required>
@@ -272,7 +269,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
       </div>
       <div class="field">
         <label for="r-text" data-i18n="rv_form_text_label">Отзыв</label>
-        <textarea id="r-text" required maxlength="900" data-i18n-ph="rv_form_text_ph" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
+        
+<div class="field">
+    <label>Ваш идентификатор</label>
+    <input type="text" id="client-id-display" value="Загрузка..." readonly style="padding:13px 15px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-mute);font-size:15px;cursor:not-allowed;">
+</div>
+<textarea id="r-text" required maxlength="900" data-i18n-ph="rv_form_text_ph" placeholder="Что делали, что получилось, что можно было лучше"></textarea>
       </div>
       <button type="submit" class="btn btn--primary" data-i18n="rv_form_submit">Отправить отзыв</button>
       <p class="form__note" data-i18n="rv_form_note">Отзыв публикуется после короткой проверки — обычно в течение нескольких часов. Мы не редактируем текст, только отсекаем спам.</p>
@@ -746,6 +748,93 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (err) {
                 alert('Ошибка сети.');
+            }
+        });
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Получаем уникальный ID по IP
+    try {
+        const res = await fetch('/api/get-client-id');
+        const data = await res.json();
+        document.getElementById('client-id-display').value = data.name;
+        window.currentClientName = data.name;
+    } catch (e) {
+        document.getElementById('client-id-display').value = 'Клиент #' + Math.floor(1000 + Math.random() * 9000);
+        window.currentClientName = document.getElementById('client-id-display').value;
+    }
+
+    // 2. Логика звездочек
+    const starContainer = document.querySelector('.stars-container') || document.querySelector('form');
+    let currentRating = 0;
+    
+    // Ищем все элементы, которые похожи на звезды (обычно это span или div с ★)
+    const stars = Array.from(document.querySelectorAll('form span, form div')).filter(el => el.textContent.trim() === '★' || el.textContent.trim() === '☆');
+    
+    stars.forEach((star, index) => {
+        star.style.cursor = 'pointer';
+        star.style.fontSize = '24px'; // Делаем их побольше
+        star.addEventListener('click', () => {
+            currentRating = index + 1;
+            stars.forEach((s, i) => {
+                s.textContent = i < currentRating ? '★' : '☆';
+                s.style.color = i < currentRating ? 'var(--accent)' : 'var(--text-mute)';
+            });
+        });
+    });
+
+    // 3. Отправка формы
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Выберите оценку.');
+                return;
+            }
+
+            const service = document.querySelector('select[name="service"]')?.value || 'Другое';
+            const text = document.querySelector('textarea[name="text"]')?.value || '';
+            
+            if (text.length < 10) {
+                alert('Отзыв слишком короткий.');
+                return;
+            }
+
+            const btn = form.querySelector('button[type="submit"]');
+            const oldText = btn.textContent;
+            btn.textContent = 'Отправка...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/submit-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: window.currentClientName,
+                        service: service,
+                        rating: currentRating,
+                        text: text
+                    })
+                });
+
+                if (res.ok) {
+                    alert(`Спасибо! Ваш отзыв отправлен на модерацию.\nВаш ID: ${window.currentClientName}`);
+                    form.reset();
+                    currentRating = 0;
+                    stars.forEach(s => { s.textContent = '☆'; s.style.color = 'var(--text-mute)'; });
+                } else {
+                    alert('Ошибка при отправке.');
+                }
+            } catch (err) {
+                alert('Ошибка сети.');
+            } finally {
+                btn.textContent = oldText;
+                btn.disabled = false;
             }
         });
     }
