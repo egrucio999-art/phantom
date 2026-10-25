@@ -149,7 +149,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Загрузка и рендер отзывов
     try {
-        const res = await fetch('/reviews.json?v=' + Date.now());
+        const res = await fetch('/reviews.json?v=999' + Date.now());
         const data = await res.json();
         
         // Обновляем статистику
