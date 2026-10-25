@@ -243,7 +243,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <h2 data-i18n="rv_form_title">Оставить отзыв</h2>
     <p data-i18n="rv_form_text">Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
     
-<form id="reviewForm" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: left;">
+
+    <div id="reviews-list" style="display:flex; flex-direction:column; gap:24px; margin: 40px 0;">
+        <!-- Отзывы рендерятся здесь -->
+    </div>
+    <form id="reviewForm" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: left;">
     <div class="field">
         <label>Направление</label>
         <select id="rev-service" required style="width:100%; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text);">
@@ -569,48 +573,9 @@ document.addEventListener('langchange', () => {
 loadReviews();
 </script>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('/reviews.json?v=4')
-            .then(r => r.json())
-            .then(data => {
-                const s = data.summary;
-                // Ищем все элементы с цифрами в гистограмме (они обычно лежат в правой колонке)
-                const rows = document.querySelectorAll('.rating-row');
-                if(rows.length >= 5) {
-                    rows[0].querySelector('.rating-count').textContent = s.distribution['5'];
-                    rows[1].querySelector('.rating-count').textContent = s.distribution['4'];
-                    rows[2].querySelector('.rating-count').textContent = s.distribution['3'];
-                    rows[3].querySelector('.rating-count').textContent = s.distribution['2'];
-                    rows[4].querySelector('.rating-count').textContent = s.distribution['1'];
-                }
-            }).catch(e => console.log(e));
-    });
-    </script>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        fetch('/reviews.json?v=5')
-            .then(r => r.json())
-            .then(data => {
-                const s = data.summary;
-                const dist = s.distribution;
-                // Ищем строки с цифрами (74, 26 и т.д.)
-                const texts = document.body.innerHTML;
-                // Простой и тупой способ: заменяем старые цифры на новые
-                // (Осторожно, но для твоего случая сработает)
-                const map = { ">74<": ">"+dist["5"]+"<", ">26<": ">"+dist["4"]+"<", ">11<": ">"+dist["3"]+"<", ">7<": ">"+dist["2"]+"<", ">2<": ">"+dist["1"]+"<" };
-                for (let key in map) {
-                    if (texts.includes(key)) {
-                        document.body.innerHTML = document.body.innerHTML.replace(new RegExp(key, 'g'), map[key]);
-                    }
-                }
-                // Обновляем общую цифру отзывов
-                const totalEl = document.getElementById('total-reviews');
-                if (totalEl) totalEl.textContent = s.total;
-            }).catch(e => console.log(e));
-    });
-    </script>
+    
+    
     
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -919,6 +884,72 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = false;
         }
     });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/reviews.json?v=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('reviews-list');
+            if (!container) return;
+            
+            // Обновляем общую статистику
+            const scoreEl = document.querySelector('.rp-rating__score');
+            if(scoreEl) scoreEl.textContent = data.summary.rating.toFixed(1);
+            const totalEl = document.querySelector('.rp-rating__text');
+            if(totalEl) totalEl.innerHTML = `На основе ${data.summary.total} отзывов`;
+
+            // Обновляем цифры в гистограмме
+            const dist = data.summary.distribution;
+            const bars = document.querySelectorAll('.rating-row .rating-count');
+            if(bars.length >= 5) {
+                bars[0].textContent = dist['5'];
+                bars[1].textContent = dist['4'];
+                bars[2].textContent = dist['3'];
+                bars[3].textContent = dist['2'];
+                bars[4].textContent = dist['1'] || 0;
+            }
+
+            // Рендерим отзывы
+            container.innerHTML = '';
+            data.reviews.forEach(r => {
+                const lang = r.lang_original || 'ru';
+                const text = lang === 'uk' ? r.text_uk : r.text_ru;
+                const name = lang === 'uk' ? r.name_uk : r.name_ru;
+                const service = lang === 'uk' ? r.service_uk : r.service_ru;
+                const note = lang === 'uk' ? 'Оригінал: українською' : 'Оригинал: русский';
+                
+                // Форматируем дату
+                const d = new Date(r.date);
+                const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+                const dateStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+                const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.style.cssText = 'border-bottom: 1px solid var(--border); padding-bottom: 24px;';
+                card.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <div style="display:flex; gap:12px; align-items:center;">
+                            <div style="width:40px; height:40px; border-radius:50%; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-weight:bold; color:var(--accent);">C</div>
+                            <div>
+                                <div style="font-weight:600; font-size:15px;">${name}</div>
+                                <div style="font-size:12px; color:var(--text-mute);">${service}</div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px; color:var(--text-mute);">${dateStr}</div>
+                    </div>
+                    <div style="color:var(--accent); margin-bottom:8px; font-size:14px; letter-spacing:2px;">${stars}</div>
+                    <p style="font-size:14px; color:var(--text-dim); line-height:1.6;">${text}</p>
+                    <div style="font-size:11px; color:var(--text-mute); font-style:italic; margin-top:8px;">${note}</div>
+                `;
+                container.appendChild(card);
+            });
+        })
+        .catch(err => console.error('Ошибка загрузки отзывов:', err));
 });
 </script>
 </body>
