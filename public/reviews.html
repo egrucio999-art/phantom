@@ -676,5 +676,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch(e => {});
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // === 1. Логика для звездочек ===
+    const stars = document.querySelectorAll('.stars span, .rating-stars span, .star');
+    let currentRating = 0;
+    
+    stars.forEach((star, index) => {
+        star.style.cursor = 'pointer';
+        star.addEventListener('click', () => {
+            currentRating = index + 1;
+            stars.forEach((s, i) => {
+                if (i < currentRating) {
+                    s.style.color = 'var(--accent)'; // Закрашенная
+                } else {
+                    s.style.color = 'var(--text-mute)'; // Пустая
+                }
+            });
+        });
+    });
+
+    // === 2. Перехват отправки формы отзыва ===
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (currentRating === 0) {
+                alert('Пожалуйста, выберите оценку (звезды).');
+                return;
+            }
+
+            const service = document.querySelector('select[name="service"]')?.value || '';
+            const text = document.querySelector('textarea[name="text"]')?.value || '';
+            
+            if (text.length < 10) {
+                alert('Отзыв слишком короткий.');
+                return;
+            }
+
+            // Генерируем ID
+            let cid = localStorage.getItem('phantom_review_id');
+            if (!cid) {
+                cid = Math.floor(1000 + Math.random() * 9000);
+                localStorage.setItem('phantom_review_id', cid);
+            }
+            const anonymousName = `Клиент #${cid}`;
+
+            try {
+                const res = await fetch('/api/submit-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: anonymousName,
+                        service: service,
+                        rating: currentRating,
+                        text: text
+                    })
+                });
+
+                if (res.ok) {
+                    alert(`Спасибо! Ваш отзыв отправлен на модерацию.\nВаш идентификатор: ${anonymousName}`);
+                    form.reset();
+                    currentRating = 0;
+                    stars.forEach(s => s.style.color = 'var(--text-mute)');
+                } else {
+                    alert('Ошибка при отправке отзыва.');
+                }
+            } catch (err) {
+                alert('Ошибка сети.');
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
