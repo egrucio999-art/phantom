@@ -244,10 +244,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <p data-i18n="rv_form_text">Мы публикуем всё — и хорошее, и не очень. Единственное условие: без оскорблений и личных данных третьих лиц.</p>
     
 
+    
     <div id="reviews-list" style="display:flex; flex-direction:column; gap:24px; margin: 40px 0;">
         <!-- Отзывы рендерятся здесь -->
     </div>
-    <form id="reviewForm" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: left;">
+
+<form id="reviewForm" style="max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: left;">
     <div class="field">
         <label>Направление</label>
         <select id="rev-service" required style="width:100%; padding:12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text);">
@@ -950,6 +952,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
         .catch(err => console.error('Ошибка загрузки отзывов:', err));
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/reviews.json?v=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+            const s = data.summary;
+            
+            // Обновляем среднюю оценку и количество
+            const scoreEl = document.querySelector('.rp-rating__score');
+            if(scoreEl) scoreEl.textContent = s.rating.toFixed(1);
+            
+            const totalEl = document.querySelector('.rp-rating__text');
+            if(totalEl) totalEl.innerHTML = `На основе ${s.total} отзывов`;
+            
+            // Обновляем цифры в гистограмме (ищем строки)
+            const rows = document.querySelectorAll('.rating-row, tr, .bar-row');
+            // Если не нашли строки, просто ищем все элементы, где есть цифры
+            // В твоем коде это может быть таблица или список
+            // Попробуем найти по классу .count или просто обновим текст
+            document.querySelectorAll('.rating-count, .count').forEach((el, index) => {
+                const stars = 5 - index;
+                if (s.distribution[stars] !== undefined) {
+                    el.textContent = s.distribution[stars];
+                }
+            });
+        });
 });
 </script>
 </body>
